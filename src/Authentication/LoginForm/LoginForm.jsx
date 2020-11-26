@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,8 +9,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { toast } from 'react-toastify';
 
-import { Copyright } from 'components';
+
+import { Copyright, Loader } from 'components';
+
+import { auth } from 'data/service/firebase.service';
 
 
 const useStyles = makeStyles(theme => ({
@@ -46,11 +50,44 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LoginForm = () => {
+  const [inputData, setInputData] = useState({});
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const classes = useStyles();
 
   const submitHandler = e => {
     e.preventDefault();
-    console.log('submitted');
+    const { email, password } = inputData;
+    setIsLoading(true);
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(user => {
+        let message = 'Zalogowano pomyślnie.';
+
+        toast.success(message,
+          {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        let message = 'Błąd logowania.';
+
+        toast.error(message,
+          {
+            position: toast.POSITION.TOP_CENTER,
+          })
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }
+
+  const inputHandler = e => {
+    setInputData(prevVal => ({
+      ...prevVal,
+      [e.target.id]: e.target.value,
+    }));
   }
 
   return (
@@ -75,6 +112,7 @@ const LoginForm = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={inputHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -87,6 +125,7 @@ const LoginForm = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={inputHandler}
               />
             </Grid>
           </Grid>
@@ -97,7 +136,7 @@ const LoginForm = () => {
             color="primary"
             className={classes.submit}
           >
-            Zaloguj
+            {isLoading ? <Loader color='white' isSmall /> : 'Zaloguj'}
           </Button>
         </form>
       </div>

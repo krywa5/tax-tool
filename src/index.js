@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'reset-css';
 import './index.scss';
 import { ThemeProvider } from '@material-ui/styles';
+
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
