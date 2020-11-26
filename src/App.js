@@ -1,9 +1,14 @@
+import React from 'react';
+import { LoginPage } from 'pages';
+import { AppWrapper } from 'components';
 
-function App() {
+
+
+const App = () => {
   return (
-    <div className="tax-tool">
-
-    </div>
+    <AppWrapper>
+      <LoginPage />
+    </AppWrapper>
   );
 }
 
