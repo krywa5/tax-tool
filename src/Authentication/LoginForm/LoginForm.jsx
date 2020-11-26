@@ -101,7 +101,7 @@ const LoginForm = () => {
           </Button>
         </form>
       </div>
-      <Box mt={3}>
+      <Box mt={1}>
         <Copyright />
       </Box>
     </Container>
