@@ -10,9 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
-
+import { translateErrorCode } from 'utils';
 import { Copyright, Loader } from 'components';
+import ROUTES from 'routes';
 
 import { auth } from 'data/service/firebase.service';
 
@@ -55,6 +57,7 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const classes = useStyles();
+  const history = useHistory();
 
   const submitHandler = e => {
     e.preventDefault();
@@ -63,21 +66,24 @@ const LoginForm = () => {
 
     auth.signInWithEmailAndPassword(email, password)
       .then(user => {
-        let message = 'Zalogowano pomyślnie.';
+        const message = 'Zalogowano pomyślnie.';
 
         toast.success(message,
           {
             position: toast.POSITION.TOP_CENTER,
           });
+
         setIsLoading(false);
+        history.push(ROUTES.taxTool);
       })
       .catch((error) => {
-        let message = 'Błąd logowania.';
+        const message = translateErrorCode(error.code);
 
         toast.error(message,
           {
             position: toast.POSITION.TOP_CENTER,
-          })
+          });
+
         setIsError(true);
         setIsLoading(false);
       });
