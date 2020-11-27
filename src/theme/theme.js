@@ -20,4 +20,14 @@ const theme = createMuiTheme({
     }
 });
 
+export const globalStyles = { // global CSS styles
+    "@global": {
+        "@keyframes rotate": {
+            "to": {
+                transform: "rotate(360deg)",
+            }
+        }
+    }
+}
+
 export default theme;
