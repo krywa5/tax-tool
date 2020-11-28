@@ -6,21 +6,19 @@ import logoSecondary from 'assets/images/logo-secondary.png';
 const useStyles = makeStyles(theme => {
     return {
         logo: {
-            position: 'fixed',
-            top: '48px',
-            left: '48px',
             maxWidth: '150px',
             height: 'auto',
+            userSelect: 'none',
         }
     }
 });
 
 
-const Logo = ({ isSecondary }) => {
+const Logo = ({ isSecondary, className }) => {
     const classes = useStyles();
 
     return (
-        <img id="logo" className={classes.logo} src={isSecondary ? logoSecondary : logoPrimary} alt="logo" />
+        <img id="logo" className={`${classes.logo} ${className}`} src={isSecondary ? logoSecondary : logoPrimary} alt="logo" />
     );
 }
 

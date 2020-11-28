@@ -1,5 +1,5 @@
 const ROUTES = {
-    taxTool: '/',
+    taxTool: '/tax-tool',
     loginPage: '/login',
 }
 

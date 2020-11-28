@@ -2,7 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { makeStyles } from '@material-ui/styles';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import { globalStyles } from 'theme';
 import { LoginPage, TaxTool } from 'pages';
@@ -19,7 +19,10 @@ const App = () => {
       <Router>
         <ToastContainer />
         <Switch>
-          <Route path={ROUTES.taxTool} exact>
+          <Route path="/" exact>
+            <Redirect to={ROUTES.taxTool} />
+          </Route>
+          <Route path={ROUTES.taxTool}>
             <TaxTool />
           </Route>
           <Route path={ROUTES.loginPage}>

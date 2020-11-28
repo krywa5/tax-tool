@@ -9,6 +9,11 @@ const useStyles = makeStyles(theme => {
       backgroundImage: `radial-gradient(${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
       padding: '50px',
       boxSizing: 'border-box',
+    },
+    logo: {
+      position: 'fixed',
+      top: '48px',
+      left: '48px',
     }
   }
 });
@@ -19,7 +24,7 @@ const AppWrapper = ({ children }) => {
 
   return (
     <div className={classes.wrapper} id="tax-tool">
-      <Logo isSecondary />
+      <Logo isSecondary className={classes.logo} />
       {children}
     </div>
   );

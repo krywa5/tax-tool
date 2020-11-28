@@ -103,7 +103,7 @@ const LoginForm = () => {
           <LockOutlinedIcon className={classes.lockIcon} />
         </Avatar>
         <Typography component="h1" variant="h5" className={classes.title}>
-          Zaloguj do Tax Tool
+          Zaloguj do TaxTool
         </Typography>
         <form className={classes.form} onSubmit={submitHandler}>
           <Grid container spacing={2}>

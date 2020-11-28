@@ -4,3 +4,6 @@ export { default as Loader } from './Loader';
 export { default as LoginForm } from './LoginForm';
 export { default as LogoutButton } from './LogoutButton';
 export { default as Logo } from './Logo';
+export { default as CountrySelect } from './CountrySelect';
+export { default as CountryFlags } from './CountryFlags';
+export { default as CountryFlag } from './CountryFlag';
