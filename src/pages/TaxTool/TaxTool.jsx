@@ -38,7 +38,7 @@ const TaxTool = () => {
                 (
                     <>
                         <LogoutButton />
-                        <Paper className={classes.wrapper} elevation={3} component="main" >
+                        <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Typography variant="h1">To jest typo</Typography>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, recusandae!</p>
                             <Typography variant="body1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates, voluptate.</Typography>
