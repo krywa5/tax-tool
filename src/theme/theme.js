@@ -25,6 +25,11 @@ export const defaultStyles = {
             'Arial',
             'sans-serif',
         ]
+    },
+    transitions: {
+        duration: {
+            long: 750,
+        }
     }
 }
 

@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     borderRadius: theme.shape.borderRadius,
     boxShadow: theme.shadows[20],
-    animation: 'fadeSlideIn .5s ease-in-out both',
+    animation: `fadeSlideIn ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut} both`,
   },
   lockIcon: {
     color: theme.palette.common.white,

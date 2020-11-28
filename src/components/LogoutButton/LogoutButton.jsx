@@ -8,13 +8,18 @@ import { useHistory } from 'react-router-dom';
 import ROUTES from 'routes';
 import { AppContext } from 'context/UserContext';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     button: {
         position: 'fixed',
         top: '75px',
         right: '75px',
+        transition: `${theme.transitions.easing.easeInOut} ${theme.transitions.duration.short}ms`,
+
+        '&:hover': {
+            transform: 'translateY(-2px)',
+        }
     }
-})
+}))
 
 const LogoutButton = props => {
     const history = useHistory();

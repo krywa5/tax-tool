@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
         width: 'fit-content',
         transition: 'width .75s ease-in-out',
         padding: `${theme.spacing(8)}px`,
+        animation: `fadeSlideIn ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut} both`,
     }
 }))
 
