@@ -3,24 +3,37 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => (
     {
-        root: ({ color, isSmall }) => ({
+        loader: ({ color, isSmall, isFullscreen }) => ({
             display: 'inline-block',
-            height: isSmall ? '21px' : '30px',
-            width: isSmall ? '21px' : '30px',
-            padding: '9px',
+            height: isSmall ? '16px' : '30px',
+            width: isSmall ? '16px' : '30px',
             borderRadius: '50%',
             border: '3px solid transparent',
             borderTop: color ? `3px solid ${color}` : `3px solid ${theme.palette.secondary.main}`,
             animation: 'rotate 1.5s infinite linear',
+            verticalAlign: 'sub',
+            position: isFullscreen
+        }),
+        wrapper: ({ isFullscreen }) => ({
+            display: isFullscreen ? 'grid' : 'inline',
+            position: isFullscreen ? 'fixed' : 'static',
+            top: '0',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            zIndex: '100',
+            placeItems: 'center',
         })
     }
 ))
 
-const Loader = ({ color, isSmall }) => {
-    const classes = useStyles({ color, isSmall });
+const Loader = props => {
+    const classes = useStyles(props);
 
     return (
-        <span className={classes.root}></span>
+        <span className={classes.wrapper}>
+            <span className={classes.loader}></span>
+        </span>
     );
 }
 

@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'reset-css';
 import { ThemeProvider } from '@material-ui/styles';
-
+import 'modern-css-reset';
+import 'fontsource-roboto';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import theme from 'theme';
+import { defaultStyles } from 'theme'
+import { Loader } from 'components';
+import AppProvider from 'context/UserContext';
 
 
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <React.Suspense fallback={<Loader isFullscreen color={defaultStyles.palette.primary.main} />}>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </React.Suspense>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

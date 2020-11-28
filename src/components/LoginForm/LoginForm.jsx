@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import { translateErrorCode } from 'utils';
 import { Copyright, Loader } from 'components';
 import ROUTES from 'routes';
+import { AppContext } from 'context/UserContext';
 
 import { auth } from 'data/service/firebase.service';
 
@@ -37,14 +38,12 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
   container: {
-    position: 'absolute',
-    top: '40%',
-    left: '50%',
-    transform: 'translate(-50%,-50%)',
+    marginTop: theme.spacing(10),
     padding: theme.spacing(3),
     backgroundColor: theme.palette.common.white,
     borderRadius: theme.shape.borderRadius,
-    boxShadow: theme.shadows[20]
+    boxShadow: theme.shadows[20],
+    animation: 'fadeSlideIn .5s ease-in-out both',
   },
   lockIcon: {
     color: theme.palette.common.white,
@@ -53,8 +52,8 @@ const useStyles = makeStyles(theme => ({
 
 const LoginForm = () => {
   const [inputData, setInputData] = useState({});
-  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { setIsUserLogged } = useContext(AppContext);
 
   const classes = useStyles();
   const history = useHistory();
@@ -75,6 +74,7 @@ const LoginForm = () => {
 
         setIsLoading(false);
         history.push(ROUTES.taxTool);
+        setIsUserLogged(true);
       })
       .catch((error) => {
         const message = translateErrorCode(error.code);
@@ -84,7 +84,6 @@ const LoginForm = () => {
             position: toast.POSITION.TOP_CENTER,
           });
 
-        setIsError(true);
         setIsLoading(false);
       });
   }

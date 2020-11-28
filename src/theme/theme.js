@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+export const defaultStyles = {
     palette: {
         primary: {
             light: '#64c1ff',
@@ -17,8 +17,18 @@ const theme = createMuiTheme({
         background: {
             default: '#eee'
         }
+    },
+    typography: {
+        fontFamily: [
+            'Roboto',
+            'Helvetica Neue',
+            'Arial',
+            'sans-serif',
+        ]
     }
-});
+}
+
+const theme = createMuiTheme(defaultStyles);
 
 export const globalStyles = { // global CSS styles
     "@global": {
@@ -26,7 +36,17 @@ export const globalStyles = { // global CSS styles
             "to": {
                 transform: "rotate(360deg)",
             }
-        }
+        },
+        "@keyframes fadeSlideIn": {
+            "from": {
+                opacity: "0",
+                transform: "translateY(15px)",
+            },
+            "to": {
+                opacity: "1",
+                transform: "translateY(0)",
+            }
+        },
     }
 }
 

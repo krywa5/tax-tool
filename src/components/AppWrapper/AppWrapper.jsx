@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { Logo } from 'components';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -7,6 +8,7 @@ const useStyles = makeStyles(theme => {
       minHeight: '100vh',
       backgroundImage: `radial-gradient(${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
       padding: '50px',
+      boxSizing: 'border-box',
     }
   }
 });
@@ -17,6 +19,7 @@ const AppWrapper = ({ children }) => {
 
   return (
     <div className={classes.wrapper} id="tax-tool">
+      <Logo isSecondary />
       {children}
     </div>
   );
