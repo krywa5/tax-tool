@@ -12,7 +12,7 @@ import ROUTES from 'routes';
 const useStyles = makeStyles(globalStyles);
 
 const App = () => {
-  const styles = useStyles();
+  useStyles();
 
   return (
     <AppWrapper>

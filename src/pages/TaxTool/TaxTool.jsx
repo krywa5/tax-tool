@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Paper, makeStyles } from '@material-ui/core';
 
@@ -25,6 +25,15 @@ const TaxTool = () => {
     const { isUserLogged, setIsUserLogged, setCountriesData } = useContext(AppContext);
     const classes = useStyles();
 
+
+    const getCountriesData = useCallback(() => {
+        const countriesDataRef = db.ref('countries');
+        countriesDataRef.on('value', snapshot => {
+            const data = snapshot.val();
+            setCountriesData(data);
+        })
+    }, [setCountriesData])
+
     // TEMP
     // const isUserLogged = true; // dodać potem z kontekstu
     useEffect(() => {
@@ -37,19 +46,11 @@ const TaxTool = () => {
             history.push(ROUTES.loginPage);
             setIsUserLogged(false);
         }
-    }, [history, setIsUserLogged]);
+    }, [history, setIsUserLogged, getCountriesData]);
 
     useEffect(() => {
         getCountriesData();
-    }, [])
-
-    const getCountriesData = () => {
-        const countriesDataRef = db.ref('countries');
-        countriesDataRef.on('value', snapshot => {
-            const data = snapshot.val();
-            setCountriesData(data);
-        })
-    }
+    }, [getCountriesData])
 
 
     return (
