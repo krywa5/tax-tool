@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { toast } from "react-toastify";
 
-import { auth } from 'data/service/firebase.service';
-import { useHistory } from 'react-router-dom';
-import ROUTES from 'routes';
-import { AppContext } from 'context/UserContext';
+import { LogoutAlert } from 'components';
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -18,18 +16,33 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             transform: 'translateY(-2px)',
         }
+    },
+    toast: {
+        backgroundColor: 'white',
+        padding: '40px',
+        borderRadius: `${theme.shape.borderRadius}px`,
+
+        "& .Toastify__progress-bar": {
+            backgroundColor: theme.palette.secondary.main
+        },
+        "& .Toastify__close-button": {
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            color: theme.palette.error.main,
+            opacity: '1',
+        }
     }
 }))
 
 const LogoutButton = props => {
-    const history = useHistory();
+
     const styles = useStyles();
-    const { setIsUserLogged } = useContext(AppContext);
 
     const handleOnClick = () => {
-        auth.signOut();
-        history.push(ROUTES.loginPage);
-        setIsUserLogged(false);
+        toast.info(<LogoutAlert />, {
+            className: styles.toast,
+        });
     }
 
     return (
