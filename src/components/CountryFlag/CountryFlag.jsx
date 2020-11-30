@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
-import belgiumFlag from 'assets/images/flags/belgium.jpg';
-import franceFlag from 'assets/images/flags/france.jpg';
-import germanyFlag from 'assets/images/flags/germany.jpg';
-import netherlandsFlag from 'assets/images/flags/netherlands.jpg';
 import { makeStyles } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
 import { useHistory } from 'react-router-dom';
 import ROUTES from 'routes';
+
+import belgiumFlag from 'assets/images/flags/belgium.jpg';
+import franceFlag from 'assets/images/flags/france.jpg';
+import germanyFlag from 'assets/images/flags/germany.jpg';
+import netherlandsFlag from 'assets/images/flags/netherlands.jpg';
+import noFlag from 'assets/images/flags/no-flag.jpg';
 
 const useStyles = makeStyles(theme => ({
     listItem: {
@@ -64,7 +66,7 @@ const CountryFlag = ({ country }) => {
             case 'netherlands':
                 return netherlandsFlag;
             default:
-                break;
+                return noFlag;
         }
     }
 

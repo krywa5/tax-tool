@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     },
     toast: {
         backgroundColor: 'white',
-        padding: '40px',
+        padding: '40px 20px',
         borderRadius: `${theme.shape.borderRadius}px`,
 
         "& .Toastify__progress-bar": {
@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
         },
         "& .Toastify__close-button": {
             position: 'absolute',
-            top: '20px',
-            right: '20px',
+            top: '15px',
+            right: '15px',
             color: theme.palette.error.main,
             opacity: '1',
         }
