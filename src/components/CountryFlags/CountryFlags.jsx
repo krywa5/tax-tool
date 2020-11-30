@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AppContext } from 'context/UserContext';
 import { Grid } from '@material-ui/core';
-import { CountryFlag } from 'components';
+import { CountryFlag, Loader } from 'components';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
@@ -15,6 +15,7 @@ const useStyles = makeStyles({
 const CountryFlags = () => {
     const { countriesData } = useContext(AppContext);
     const classes = useStyles();
+    const isDataLoading = !countriesData.length;
 
     return (
         <Grid
@@ -26,10 +27,12 @@ const CountryFlags = () => {
             className={classes.flagsWrapper}
             component="ul"
         >
-            {countriesData.map(country => <CountryFlag key={country.id} country={country.id} />
-            )}
+            {isDataLoading ?
+                <Loader />
+                :
+                countriesData.map(country => <CountryFlag key={country.id} country={country.id} />)
+            }
         </Grid>
-
     );
 }
 
