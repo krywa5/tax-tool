@@ -13,15 +13,15 @@ import AppProvider from 'context/UserContext';
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <React.Suspense fallback={<Loader isFullscreen color={defaultStyles.palette.primary.main} />}>
-        <AppProvider>
-          <App />
-        </AppProvider>
-      </React.Suspense>
-    </ThemeProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <React.Suspense fallback={<Loader isFullscreen color={defaultStyles.palette.primary.main} />}>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </React.Suspense>
+  </ThemeProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

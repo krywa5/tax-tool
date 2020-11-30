@@ -1,1 +1,83 @@
 - Przypomnienie hasła
+
+
+
+
+HOLANDIA:
+- Przychód brutto
+- Podatek
+- Rozpoczęcie pracy
+- Zakończenie pracy
+- Dni spędzone w Polsce
+
+BELGIA:
+- Przychód brutto
+- Podatek
+- Rozpoczęcie pracy
+- Zakończenie pracy
+- Dzień wypłaty
+- Dni spędzone w Polsce
+
+FRANCJA:
+- Przychód brutto
+- Rozpoczęcie pracy
+- Zakończenie pracy
+- Dzień wypłaty
+- Dni spędzone w Polsce
+
+NIEMCY:
+- Przychód brutto
+- Przychód wakacyjny
+- Rozpoczęcie pracy
+- Zakończenie pracy
+- Dni spędzone w Polsce
+
+WSPÓLNE:
+- Przychód brutto
+- Rozpoczęcie pracy
+- Zakończenie pracy
+- Dni spędzone w Polsce
+
+
+AUTOMATYCZNE:
+HOLANDIA:
+- Średni kurs waluty
+- Ilość miesięcy zagranicą
+- Wysokość diety za dzień
+- Ilość dni zagranicą
+- Wartość diet
+- Wartość podatku
+- Wartość przychodu
+
+BELGIA:
+- Średni kurs waluty
+- Ilość miesięcy zagranicą
+- Wysokość diety za dzień
+- Ilość dni zagranicą
+- Wartość diet
+- Wartość podatku
+- Wartość przychodu
+
+FRANCJA:
+- Średni kurs waluty
+- Ilość miesięcy zagranicą
+- Wysokość diety za dzień
+- Ilość dni zagranicą
+- Wartość diet
+- Wartość przychodu
+
+NIEMCY:
+- Średni kurs waluty
+- Ilość miesięcy zagranicą
+- Wysokość diety za dzień
+- Ilość dni zagranicą
+- Wartość diet
+- Wartość przychodu
+
+WSPÓLNE:
+- Średni kurs waluty
+- Ilość miesięcy zagranicą
+- Wysokość diety za dzień
+- Ilość dni zagranicą
+- Wartość diet
+- Wartość przychodu

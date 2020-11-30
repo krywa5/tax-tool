@@ -24,7 +24,11 @@ export const defaultStyles = {
             'Helvetica Neue',
             'Arial',
             'sans-serif',
-        ]
+        ],
+        h4: {
+            fontSize: '1.7rem',
+            marginBottom: '.5rem',
+        }
     },
     transitions: {
         duration: {

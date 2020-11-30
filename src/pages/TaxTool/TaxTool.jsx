@@ -4,7 +4,7 @@ import { Paper, makeStyles } from '@material-ui/core';
 
 import ROUTES from 'routes';
 import { auth, db } from 'data/service/firebase.service';
-import { LogoutButton, Loader, Logo, CountrySelect } from 'components';
+import { LogoutButton, Loader, Logo, CountrySelect, Country } from 'components';
 import { AppContext } from 'context/UserContext';
 import { Netherlands, Belgium, France, Germany } from 'components/countries';
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 const TaxTool = () => {
     const history = useHistory();
-    const { setIsUserLogged, setCountriesData, selectedCountry } = useContext(AppContext);
+    const { setIsUserLogged, setCountriesData, selectedCountry, countriesData } = useContext(AppContext);
     const classes = useStyles({ selectedCountry });
 
 
@@ -65,7 +65,7 @@ const TaxTool = () => {
                             <CountrySelect />
 
                             <Switch>
-                                <Route path={ROUTES.netherlands}>
+                                {/* <Route path={ROUTES.netherlands}>
                                     <Netherlands />
                                 </Route>
                                 <Route path={ROUTES.belgium}>
@@ -76,7 +76,14 @@ const TaxTool = () => {
                                 </Route>
                                 <Route path={ROUTES.germany}>
                                     <Germany />
-                                </Route>
+                                </Route> */}
+
+
+                                {countriesData.map(country => (
+                                    <Route key={country.id} path={`${ROUTES.taxTool}/${country.id}`}>
+                                        <Country data={country} />
+                                    </Route>
+                                ))}
                             </Switch>
                         </Paper>
                     </>

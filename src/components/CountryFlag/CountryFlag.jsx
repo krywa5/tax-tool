@@ -75,7 +75,7 @@ const CountryFlag = ({ country }) => {
             setSelectedCountry('');
             history.push(`${ROUTES.taxTool}`);
         } else {
-            // setSelectedCountry(country);
+            setSelectedCountry(country);
             history.push(`${ROUTES.taxTool}/${country}`)
         }
     }
