@@ -1,29 +1,30 @@
 import React, { useContext, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { Paper, makeStyles } from '@material-ui/core';
 
 import ROUTES from 'routes';
 import { auth, db } from 'data/service/firebase.service';
 import { LogoutButton, Loader, Logo, CountrySelect } from 'components';
 import { AppContext } from 'context/UserContext';
+import { Netherlands, Belgium, France, Germany } from 'components/countries';
 
 const useStyles = makeStyles(theme => ({
-    wrapper: {
+    wrapper: ({ selectedCountry }) => ({
         margin: `${theme.spacing(10)}px auto ${theme.spacing(10)}px`,
-        maxWidth: '1024px',
-        transition: 'width .75s ease-in-out',
+        maxWidth: selectedCountry ? '1024px' : '800px',
         padding: `${theme.spacing(3)}px ${theme.spacing(8)}px`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         animation: `fadeSlideIn ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut} both`,
-    }
+        transition: `max-width ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut}`,
+    })
 }))
 
 const TaxTool = () => {
     const history = useHistory();
-    const { isUserLogged, setIsUserLogged, setCountriesData } = useContext(AppContext);
-    const classes = useStyles();
+    const { setIsUserLogged, setCountriesData, selectedCountry } = useContext(AppContext);
+    const classes = useStyles({ selectedCountry });
 
 
     const getCountriesData = useCallback(() => {
@@ -35,21 +36,21 @@ const TaxTool = () => {
     }, [setCountriesData])
 
     // TEMP
-    // const isUserLogged = true; // dodać potem z kontekstu
-    useEffect(() => {
-        if (auth.currentUser) {
-            // user is logged
-            setIsUserLogged(true);
-            getCountriesData();
-        } else {
-            // user is not logged
-            history.push(ROUTES.loginPage);
-            setIsUserLogged(false);
-        }
-    }, [history, setIsUserLogged, getCountriesData]);
+    const isUserLogged = true; // dodać potem z kontekstu
+    // useEffect(() => {
+    //     if (auth.currentUser) {
+    //         // user is logged
+    //         setIsUserLogged(true);
+    //         getCountriesData();
+    //     } else {
+    //         // user is not logged
+    //         history.push(ROUTES.loginPage);
+    //         setIsUserLogged(false);
+    //     }
+    // }, [history, setIsUserLogged, getCountriesData]);
 
     useEffect(() => {
-        getCountriesData();
+        getCountriesData()
     }, [getCountriesData])
 
 
@@ -61,9 +62,22 @@ const TaxTool = () => {
                         <LogoutButton />
                         <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Logo />
-                            <React.Suspense fallback={<Loader />}>
-                                <CountrySelect />
-                            </React.Suspense>
+                            <CountrySelect />
+
+                            <Switch>
+                                <Route path={ROUTES.netherlands}>
+                                    <Netherlands />
+                                </Route>
+                                <Route path={ROUTES.belgium}>
+                                    <Belgium />
+                                </Route>
+                                <Route path={ROUTES.france}>
+                                    <France />
+                                </Route>
+                                <Route path={ROUTES.germany}>
+                                    <Germany />
+                                </Route>
+                            </Switch>
                         </Paper>
                     </>
                 ) :

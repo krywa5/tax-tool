@@ -8,3 +8,4 @@ export { default as Logo } from './Logo';
 export { default as CountrySelect } from './CountrySelect';
 export { default as CountryFlags } from './CountryFlags';
 export { default as CountryFlag } from './CountryFlag';
+export { default as InputField } from './InputField';
