@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Country = ({ data, ...rest }) => {
-    const { setSelectedCountry, selectedCountry } = useContext(AppContext);
+    const { setSelectedCountry } = useContext(AppContext);
     const [isExpanded, setIsExpanded] = useState(false);
     const [countryData, setCountryData] = useState(data);
 
@@ -32,7 +32,7 @@ const Country = ({ data, ...rest }) => {
     );
 
     return (
-        <Collapse in={isExpanded || selectedCountry} component={'article'} className={classes.collapse}>
+        <Collapse in={isExpanded} component={'article'} className={classes.collapse}>
             <InputField>
                 <InputLabel
                     label={`Przychód brutto (${countryData.currency})`}
