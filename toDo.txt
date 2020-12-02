@@ -46,7 +46,7 @@ HOLANDIA:
 - Wysokość diety za dzień
 - Ilość dni zagranicą
 - Wartość diet
-- Wartość podatku
+- Wartość podatku +
 - Wartość przychodu
 
 BELGIA:
@@ -55,7 +55,7 @@ BELGIA:
 - Wysokość diety za dzień
 - Ilość dni zagranicą
 - Wartość diet
-- Wartość podatku
+- Wartość podatku +
 - Wartość przychodu
 
 FRANCJA:
