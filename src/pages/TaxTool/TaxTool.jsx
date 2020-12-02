@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     wrapper: ({ selectedCountry }) => ({
         margin: `${theme.spacing(10)}px auto ${theme.spacing(10)}px`,
         maxWidth: selectedCountry ? '1024px' : '800px',
-        padding: `${theme.spacing(3)}px ${theme.spacing(8)}px`,
+        padding: `${theme.spacing(3)}px 0`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

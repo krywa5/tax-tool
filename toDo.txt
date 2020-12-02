@@ -5,29 +5,29 @@
 
 HOLANDIA:
 - Przychód brutto
-- Podatek
+- Podatek +
 - Rozpoczęcie pracy
 - Zakończenie pracy
 - Dni spędzone w Polsce
 
 BELGIA:
 - Przychód brutto
-- Podatek
+- Podatek +
 - Rozpoczęcie pracy
 - Zakończenie pracy
-- Dzień wypłaty
+- Dzień wypłaty +
 - Dni spędzone w Polsce
 
 FRANCJA:
 - Przychód brutto
 - Rozpoczęcie pracy
 - Zakończenie pracy
-- Dzień wypłaty
+- Dzień wypłaty +
 - Dni spędzone w Polsce
 
 NIEMCY:
 - Przychód brutto
-- Przychód wakacyjny
+- Przychód wakacyjny +
 - Rozpoczęcie pracy
 - Zakończenie pracy
 - Dni spędzone w Polsce

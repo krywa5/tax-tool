@@ -21,7 +21,7 @@ ReactDOM.render(
       </AppProvider>
     </React.Suspense>
   </ThemeProvider>,
-  // </React.StrictMode>,
+  // </React.StrictMode>, 
   document.getElementById('root')
 );
 
