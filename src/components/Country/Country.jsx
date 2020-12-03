@@ -5,7 +5,7 @@ import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
-    collapse: {
+    wrapper: {
         width: "100%",
 
         "& .MuiFormControl-root": {
@@ -19,27 +19,25 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Country = ({ data, ...rest }) => {
-    const { setSelectedCountry } = useContext(AppContext);
-    const [isExpanded, setIsExpanded] = useState(false);
+    const { setSelectedCountry, selectedCountry } = useContext(AppContext);
     const [countryData, setCountryData] = useState(data);
 
     const classes = useStyles();
 
     useEffect(() => {
         setSelectedCountry(countryData.id);
-        setIsExpanded(true);
     },
         [countryData.id, setSelectedCountry]
     );
 
     return (
-        <Collapse in={isExpanded} component={'article'} className={classes.collapse}>
+        <Container component={'article'} className={classes.wrapper} disableGutters >
             <Container className={classes.container}>
                 {
                     countryData.inputs.manual.includes("income") &&
                     <InputField>
                         <InputLabel
-                            label={`Przychód brutto (${countryData.currency})`}
+                            label='Przychód brutto'
                             labelFor="income"
                             sublabels={countryData.intl.income}
                         />
@@ -48,6 +46,9 @@ const Country = ({ data, ...rest }) => {
                             label="Przychód"
                             type="number"
                             variant="outlined"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
+                            }}
                         />
                     </InputField>
                 }
@@ -55,7 +56,7 @@ const Country = ({ data, ...rest }) => {
                     countryData.inputs.manual.includes("paidTax") &&
                     <InputField>
                         <InputLabel
-                            label={`Podatek (${countryData.currency})`}
+                            label='Podatek'
                             labelFor="paidTax"
                             sublabels={countryData.intl.tax}
                         />
@@ -64,6 +65,9 @@ const Country = ({ data, ...rest }) => {
                             label="Podatek"
                             type="number"
                             variant="outlined"
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
+                            }}
                         />
                     </InputField>
                 }
@@ -187,7 +191,7 @@ const Country = ({ data, ...rest }) => {
                                     min: 0,
                                     step: 0.1,
                                 },
-                                startAdornment: <InputAdornment position="start">{countryData.currency}</InputAdornment>,
+                                endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
                             }}
                         />
                     </InputField>
@@ -229,7 +233,7 @@ const Country = ({ data, ...rest }) => {
                                 inputProps: {
                                     readOnly: true,
                                 },
-                                startAdornment: <InputAdornment position="start">{countryData.currency}</InputAdornment>,
+                                endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
                             }}
 
                         />
@@ -253,7 +257,7 @@ const Country = ({ data, ...rest }) => {
                                     step: 0.01,
                                     readOnly: true,
                                 },
-                                startAdornment: <InputAdornment position="start">PLN</InputAdornment>,
+                                endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
                             }}
                         />
                     </InputField>
@@ -277,13 +281,13 @@ const Country = ({ data, ...rest }) => {
                                     step: 0.01,
                                     readOnly: true,
                                 },
-                                startAdornment: <InputAdornment position="start">PLN</InputAdornment>,
+                                endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
                             }}
                         />
                     </InputField>
                 }
             </Container>
-        </Collapse>
+        </Container>
     );
 }
 
