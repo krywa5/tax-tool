@@ -24,3 +24,4 @@ export const translateErrorCode = errorCode => {
 export const strToNum = (string = '') => {
     return Number(Number(string.replace(',', '.')).toFixed(2));
 }
+

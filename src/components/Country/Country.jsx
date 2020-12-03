@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
 import { strToNum } from 'utils';
+import { currencyFetch } from 'data/fetch/currency.fetch';
 
 const useStyles = makeStyles(theme => ({
     wrapper: {
@@ -44,10 +45,41 @@ const Country = ({ data, ...rest }) => {
     const [daysInPoland, setDaysInPoland] = useState(0);
 
     useEffect(() => {
-        setSelectedCountry(countryData.id);
+        const { id, currency } = countryData;
+
+        setSelectedCountry(id);
+        // if (endDate) {
+        currencyFetch(endDate, currency);
+        // }
     },
-        [countryData.id, setSelectedCountry]
+        [countryData.id, setSelectedCountry, endDate, countryData]
     );
+
+
+
+    const getLastWorkingDay = (date) => {
+        if (!date) return;
+        let output = false;
+        let newDate = new Date(date);
+        newDate.setDate(newDate.getDate() - 1);
+        // console.log(newDate);
+        !(newDate.getDay() % 6) ? (output = true) : (output = false);
+        // console.log(`Pierwsza iteracja ${output}`);
+        if (output === true) {
+            newDate.setDate(newDate.getDate() - 1);
+        }
+        // console.log(newDate);
+        !(newDate.getDay() % 6) ? (output = true) : (output = false);
+        // console.log(`Druga iteracja ${output}`);
+        if (output === true) {
+            newDate.setDate(newDate.getDate() - 1);
+        }
+        // console.log(newDate);
+        !(newDate.getDay() % 6) ? (output = true) : (output = false);
+        // console.log(`Trzecia iteracja ${output}`);
+        console.log(`ostateczna data: ${newDate}`);
+        return newDate.toISOString().slice(0, 10);
+    };
 
     return (
         <Container component={'article'} className={classes.wrapper} disableGutters >
