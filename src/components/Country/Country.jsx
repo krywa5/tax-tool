@@ -1,8 +1,9 @@
-import { Collapse, Container, InputAdornment, TextField } from '@material-ui/core';
+import { Container, InputAdornment, TextField } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
+import { strToNum } from 'utils';
 
 const useStyles = makeStyles(theme => ({
     wrapper: {
@@ -19,10 +20,28 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Country = ({ data, ...rest }) => {
-    const { setSelectedCountry, selectedCountry } = useContext(AppContext);
-    const [countryData, setCountryData] = useState(data);
-
     const classes = useStyles();
+    const { setSelectedCountry, selectedCountry } = useContext(AppContext);
+    // insert data from context to component's state. USE STATE DATA INSIDE COUNTRY COMPONENT!
+    const [countryData, setCountryData] = useState(data);
+    const [isTipsActive, setIsTipsActive] = useState(false);
+    // CALCULATION VALUES
+    const [allowanceValue, setAllowanceValue] = useState(countryData.diet);
+    const [monthlyIncomeCost, setMonthlyIncomeCost] = useState(countryData.monthlyIncomeCost);
+    const [income, setIncome] = useState(0);
+    const [paidTax, setPaidTax] = useState(0);
+    const [incomes, setIncomes] = useState([]); // place to store incomes
+    const [holidayIncome, setHolidayIncome] = useState(0);
+    const [paymentDate, setPaymentDate] = useState('');
+    const [currencyValue, setCurrencyValue] = useState(0);
+    const [currencyValueDate, setCurrencyValueDate] = useState('');
+    const [currencyValueDateAPI, setCurrencyValueDateAPI] = useState('');
+    const [currencyTable, setCurrencyTable] = useState('');
+    const [workDays, setWorkDays] = useState(0);
+    const [workMonths, setWorkMonths] = useState(0);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [daysInPoland, setDaysInPoland] = useState(0);
 
     useEffect(() => {
         setSelectedCountry(countryData.id);
@@ -46,14 +65,21 @@ const Country = ({ data, ...rest }) => {
                             label="Przychód"
                             type="number"
                             variant="outlined"
+                            value={income}
+                            autoFocus
+                            onChange={e => setIncome(strToNum(e.target.value))}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
+                                inputProps: {
+                                    step: 0.01,
+                                    min: 0,
+                                }
                             }}
                         />
                     </InputField>
                 }
                 {
-                    countryData.inputs.manual.includes("paidTax") &&
+                    countryData.inputs.manual?.includes("paidTax") &&
                     <InputField>
                         <InputLabel
                             label='Podatek'
@@ -65,8 +91,14 @@ const Country = ({ data, ...rest }) => {
                             label="Podatek"
                             type="number"
                             variant="outlined"
+                            value={paidTax}
+                            onChange={e => setPaidTax(strToNum(e.target.value))}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
+                                inputProps: {
+                                    step: 0.01,
+                                    min: 0,
+                                }
                             }}
                         />
                     </InputField>
@@ -82,6 +114,13 @@ const Country = ({ data, ...rest }) => {
                             id="startDate"
                             type="date"
                             variant="outlined"
+                            // value={startDate}
+                            onBlur={e => setStartDate(e.target.value)}
+                            InputProps={{
+                                inputProps: {
+                                    max: new Date().toISOString().slice(0, 10),
+                                }
+                            }}
                         />
                     </InputField>
                 }
@@ -96,21 +135,35 @@ const Country = ({ data, ...rest }) => {
                             id="endDate"
                             type="date"
                             variant="outlined"
+                            // value={endDate}
+                            onBlur={e => setEndDate(e.target.value)}
+                            InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                }
+                            }}
                         />
                     </InputField>
                 }
                 {
-                    countryData.inputs.manual.includes("paymentDay") &&
+                    countryData.inputs.manual.includes("paymentDate") &&
                     <InputField>
                         <InputLabel
                             label='Dzień wypłaty'
-                            labelFor="paymentDay"
-                            sublabels={countryData.intl.paymentDay}
+                            labelFor="paymentDate"
+                            sublabels={[countryData.intl.paymentDate, "Wypełnić jeśli inny niż ostatni dzień pracy"]}
                         />
                         <TextField
-                            id="paymentDay"
+                            id="paymentDate"
                             type="date"
                             variant="outlined"
+                            // value={paymentDate}
+                            onBlur={e => setPaymentDate(e.target.value)}
+                            InputProps={{
+                                inputProps: {
+                                    max: new Date().toISOString().slice(0, 10),
+                                }
+                            }}
                         />
                     </InputField>
                 }
@@ -126,6 +179,12 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Dni w Polsce"
+                            InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                    max: 366,
+                                }
+                            }}
                         />
                     </InputField>
                 }

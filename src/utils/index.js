@@ -20,3 +20,7 @@ export const translateErrorCode = errorCode => {
             return "Coś poszło nie tak."
     }
 }
+
+export const strToNum = (string = '') => {
+    return Number(Number(string.replace(',', '.')).toFixed(2));
+}

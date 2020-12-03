@@ -6,7 +6,6 @@ import ROUTES from 'routes';
 import { auth, db } from 'data/service/firebase.service';
 import { LogoutButton, Loader, Logo, CountrySelect, Country } from 'components';
 import { AppContext } from 'context/UserContext';
-import { Netherlands, Belgium, France, Germany } from 'components/countries';
 
 const useStyles = makeStyles(theme => ({
     wrapper: ({ selectedCountry }) => ({
