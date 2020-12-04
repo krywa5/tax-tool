@@ -3,8 +3,9 @@ import { AppContext } from 'context/UserContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
-import { strToNum } from 'utils';
+import { strToNum, getLastWorkingDay } from 'utils';
 import { currencyFetch } from 'data/fetch/currency.fetch';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles(theme => ({
     wrapper: {
@@ -45,44 +46,39 @@ const Country = ({ data, ...rest }) => {
     const [daysInPoland, setDaysInPoland] = useState(0);
 
     useEffect(() => {
-        const { id, currency } = countryData;
-
+        const { id } = countryData;
         setSelectedCountry(id);
-        // if (endDate) {
-        currencyFetch(endDate, currency);
-        // }
     },
-        [countryData.id, setSelectedCountry, endDate, countryData]
+        [countryData, setSelectedCountry]
     );
 
+    useEffect(() => { // update currency data from API
+        const { currency } = countryData;
+
+        if (endDate) {
+            currencyFetch(getLastWorkingDay(endDate), currency)
+                .then((data) => {
+                    const { effectiveDate: currencyValueDateAPI, mid: currencyValueApi, no: currencyTable } = data.rates[0];
+
+                    setCurrencyValueDateAPI(currencyValueDateAPI);
+                    setCurrencyValue(currencyValueApi);
+                    setCurrencyTable(currencyTable);
+                })
+                .catch(error => {
+                    toast.error('Wystąpił błąd przy pobieraniu waluty. Sprawdź czy podane daty są prawidłowe.', {
+                        position: 'top-center',
+                    });
+                    console.error(error);
+                })
+        }
+    }, [countryData, endDate])
 
 
-    const getLastWorkingDay = (date) => {
-        if (!date) return;
-        let output = false;
-        let newDate = new Date(date);
-        newDate.setDate(newDate.getDate() - 1);
-        // console.log(newDate);
-        !(newDate.getDay() % 6) ? (output = true) : (output = false);
-        // console.log(`Pierwsza iteracja ${output}`);
-        if (output === true) {
-            newDate.setDate(newDate.getDate() - 1);
-        }
-        // console.log(newDate);
-        !(newDate.getDay() % 6) ? (output = true) : (output = false);
-        // console.log(`Druga iteracja ${output}`);
-        if (output === true) {
-            newDate.setDate(newDate.getDate() - 1);
-        }
-        // console.log(newDate);
-        !(newDate.getDay() % 6) ? (output = true) : (output = false);
-        // console.log(`Trzecia iteracja ${output}`);
-        console.log(`ostateczna data: ${newDate}`);
-        return newDate.toISOString().slice(0, 10);
-    };
+
+
 
     return (
-        <Container component={'article'} className={classes.wrapper} disableGutters >
+        <Container component={'div'} className={classes.wrapper} disableGutters >
             <Container className={classes.container}>
                 {
                     countryData.inputs.manual.includes("income") &&
@@ -235,6 +231,8 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Kurs waluty"
+                            value={currencyValue}
+                            InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -255,6 +253,9 @@ const Country = ({ data, ...rest }) => {
                             id="allowanceMonths"
                             type="number"
                             variant="outlined"
+                            InputLabelProps={{ shrink: true }}
+                            value={workMonths}
+                            onChange={e => setWorkMonths(Number(e.target.value))}
                             label="Ilość miesięcy zagranicą"
                             InputProps={{
                                 inputProps: {
@@ -277,6 +278,7 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Wysokość diety za dzień"
+                            InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -299,6 +301,7 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Ilość dni zagranicą"
+                            InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -320,6 +323,7 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Wartość diet"
+                            InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     readOnly: true,
@@ -342,6 +346,7 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Wartość podatku"
+                            InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -366,6 +371,7 @@ const Country = ({ data, ...rest }) => {
 
                             variant="outlined"
                             label="Wartość przychodu"
+                            InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     min: 0,

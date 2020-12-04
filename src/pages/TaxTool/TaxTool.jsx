@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { Paper, makeStyles } from '@material-ui/core';
+import { Paper, makeStyles, Collapse } from '@material-ui/core';
 
 import ROUTES from 'routes';
 import { auth, db } from 'data/service/firebase.service';
@@ -17,7 +17,10 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         animation: `fadeSlideIn ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut} both`,
         transition: `max-width ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut}`,
-    })
+    }),
+    collapse: {
+        width: "100%",
+    }
 }))
 
 const TaxTool = () => {
@@ -62,9 +65,9 @@ const TaxTool = () => {
                         <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Logo />
                             <CountrySelect />
-
-                            <Switch>
-                                {/* <Route path={ROUTES.netherlands}>
+                            <Collapse in={!!selectedCountry} timeout='auto' collapsedHeight='90px' className={classes.collapse} component='article' >
+                                <Switch>
+                                    {/* <Route path={ROUTES.netherlands}>
                                     <Netherlands />
                                 </Route>
                                 <Route path={ROUTES.belgium}>
@@ -78,12 +81,14 @@ const TaxTool = () => {
                                 </Route> */}
 
 
-                                {countriesData.map(country => (
-                                    <Route key={country.id} path={`${ROUTES.taxTool}/${country.id}`}>
-                                        <Country data={country} />
-                                    </Route>
-                                ))}
-                            </Switch>
+                                    {countriesData.map(country => (
+                                        <Route key={country.id} path={`${ROUTES.taxTool}/${country.id}`}>
+                                            <Country data={country} />
+                                        </Route>
+                                    ))}
+                                </Switch>
+                            </Collapse>
+
                         </Paper>
                     </>
                 ) :

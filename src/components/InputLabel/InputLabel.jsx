@@ -10,8 +10,16 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         paddingRight: "15px",
     },
+    label: {
+        // marginBottom: '.5em',
+    },
     sublabel: {
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
+        marginBottom: '.3em',
+
+        "&:nth-of-type(1)": {
+            marginTop: '10px',
+        }
     }
 }))
 
@@ -22,7 +30,7 @@ const InputLabel = ({ label = '', labelFor = '', sublabels = [] }) => {
 
     return (
         <label className={classes.labelWrapper} htmlFor={labelFor}>
-            <Typography variant="h4" className={classes.label}>{label}</Typography>
+            <Typography variant="h5" className={classes.label}>{label}</Typography>
             {sublabels.map(sublabel => (
                 <Typography key={uid(sublabel)} variant="body2" className={classes.sublabel}>{sublabel}</Typography>
             ))}

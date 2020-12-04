@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
     countryNav: {
-        marginBottom: '15px',
+        margin: '20px 0 20px',
     }
 })
 
