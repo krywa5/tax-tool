@@ -3,7 +3,7 @@ import { AppContext } from 'context/UserContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
-import { strToNum, getLastWorkingDay } from 'utils';
+import { strToNum, getLastWorkingDay, toPolishDateFormat } from 'utils';
 import { currencyFetch } from 'data/fetch/currency.fetch';
 import { toast } from 'react-toastify';
 
@@ -142,7 +142,6 @@ const Country = ({ data, ...rest }) => {
                             id="startDate"
                             type="date"
                             variant="outlined"
-                            // value={startDate}
                             onBlur={e => setStartDate(e.target.value)}
                             InputProps={{
                                 inputProps: {
@@ -163,11 +162,10 @@ const Country = ({ data, ...rest }) => {
                             id="endDate"
                             type="date"
                             variant="outlined"
-                            // value={endDate}
                             onBlur={e => setEndDate(e.target.value)}
                             InputProps={{
                                 inputProps: {
-                                    min: 0,
+                                    max: new Date().toISOString().slice(0, 10),
                                 }
                             }}
                         />
@@ -185,7 +183,6 @@ const Country = ({ data, ...rest }) => {
                             id="paymentDate"
                             type="date"
                             variant="outlined"
-                            // value={paymentDate}
                             onBlur={e => setPaymentDate(e.target.value)}
                             InputProps={{
                                 inputProps: {
@@ -225,6 +222,10 @@ const Country = ({ data, ...rest }) => {
                         <InputLabel
                             label='Kurs waluty'
                             labelFor="currencyValue"
+                            sublabels={currencyValueDateAPI ?
+                                `${toPolishDateFormat(currencyValueDateAPI)}, ${currencyTable}`
+                                :
+                                "Brak danych o kursie waluty"}
                         />
                         <TextField
                             id="currencyValue"

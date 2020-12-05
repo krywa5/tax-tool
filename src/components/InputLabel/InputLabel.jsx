@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 const InputLabel = ({ label = '', labelFor = '', sublabels = [] }) => {
     const classes = useStyles();
 
-    if (sublabels && typeof sublabels === 'string') sublabels = [sublabels];
+    if (typeof sublabels === 'string') sublabels = [sublabels];
 
     return (
         <label className={classes.labelWrapper} htmlFor={labelFor}>

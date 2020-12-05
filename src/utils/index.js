@@ -49,3 +49,8 @@ export const getLastWorkingDay = (date) => {
     // console.log(`ostateczna data: ${newDate}`);
     return newDate.toISOString().slice(0, 10);
 };
+
+export const toPolishDateFormat = oldDate => {
+    // oldData is expected to be in yyyy-mm-dd
+    return oldDate.toString().split("-").reverse().join("-");
+}
