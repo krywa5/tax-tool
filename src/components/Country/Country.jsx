@@ -45,6 +45,7 @@ const Country = ({ data, ...rest }) => {
     const [endDate, setEndDate] = useState('');
     const [daysInPoland, setDaysInPoland] = useState(0);
 
+    // get Country Data
     useEffect(() => {
         const { id } = countryData;
         setSelectedCountry(id);
@@ -52,11 +53,14 @@ const Country = ({ data, ...rest }) => {
         [countryData, setSelectedCountry]
     );
 
+    // Get currency data from API if endDate/paymentDate inserted
     useEffect(() => { // update currency data from API
         const { currency } = countryData;
 
-        if (endDate) {
-            currencyFetch(getLastWorkingDay(endDate), currency)
+        if (endDate || paymentDate) {
+            const properDate = paymentDate || endDate; // if paymentDate is inserted it has priority over endDate
+
+            currencyFetch(getLastWorkingDay(properDate), currency)
                 .then((data) => {
                     const { effectiveDate: currencyValueDateAPI, mid: currencyValueApi, no: currencyTable } = data.rates[0];
 
@@ -65,13 +69,13 @@ const Country = ({ data, ...rest }) => {
                     setCurrencyTable(currencyTable);
                 })
                 .catch(error => {
-                    toast.error('Wystąpił błąd przy pobieraniu waluty. Sprawdź czy podane daty są prawidłowe.', {
+                    toast.error('Wystąpił błąd przy pobieraniu danych waluty. Sprawdź czy masz połączenie z internetem lub czy podane daty są prawidłowe', {
                         position: 'top-center',
                     });
                     console.error(error);
                 })
         }
-    }, [countryData, endDate])
+    }, [countryData, endDate, paymentDate])
 
 
 
