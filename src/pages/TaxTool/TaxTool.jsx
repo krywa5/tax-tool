@@ -65,7 +65,7 @@ const TaxTool = () => {
                         <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Logo />
                             <CountrySelect />
-                            <Collapse in={!!selectedCountry} timeout='auto' collapsedHeight='90px' className={classes.collapse} component='article' >
+                            <Collapse in={!!selectedCountry} timeout={1500} collapsedHeight='90px' className={classes.collapse} component='article' >
                                 <Switch>
                                     {/* <Route path={ROUTES.netherlands}>
                                     <Netherlands />

@@ -54,3 +54,14 @@ export const toPolishDateFormat = oldDate => {
     // oldData is expected to be in yyyy-mm-dd
     return oldDate.toString().split("-").reverse().join("-");
 }
+
+export const dateDiff = (startDate, endDate, daysToSubstract = 0) => {
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+
+    return Math.abs(Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24)) - daysToSubstract + 1); // +1 because we include end date
+}
+
+export const daysToMonths = days => {
+    return Math.round(days / 30);
+}

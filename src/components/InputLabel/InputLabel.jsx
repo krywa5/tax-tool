@@ -31,9 +31,12 @@ const InputLabel = ({ label = '', labelFor = '', sublabels = [] }) => {
     return (
         <label className={classes.labelWrapper} htmlFor={labelFor}>
             <Typography variant="h5" className={classes.label}>{label}</Typography>
-            {sublabels.map(sublabel => (
-                <Typography key={uid(sublabel)} variant="body2" className={classes.sublabel}>{sublabel}</Typography>
-            ))}
+            {sublabels.map(sublabel => {
+                if (!sublabel) return false;
+                return (
+                    <Typography key={uid(sublabel)} variant="body2" className={classes.sublabel}>{sublabel}</Typography>
+                )
+            })}
         </label>
     );
 }

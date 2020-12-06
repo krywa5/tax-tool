@@ -3,7 +3,7 @@ import { AppContext } from 'context/UserContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
-import { strToNum, getLastWorkingDay, toPolishDateFormat } from 'utils';
+import { strToNum, getLastWorkingDay, toPolishDateFormat, dateDiff, daysToMonths } from 'utils';
 import { currencyFetch } from 'data/fetch/currency.fetch';
 import { toast } from 'react-toastify';
 
@@ -30,6 +30,7 @@ const Country = ({ data, ...rest }) => {
     // CALCULATION VALUES
     const [allowanceValue, setAllowanceValue] = useState(countryData.diet);
     const [monthlyIncomeCost, setMonthlyIncomeCost] = useState(countryData.monthlyIncomeCost);
+    const [dailyDiet, setDailyDiet] = useState(Number((countryData.diet * countryData.dietFactor).toFixed(2)));
     const [income, setIncome] = useState(0);
     const [paidTax, setPaidTax] = useState(0);
     const [incomes, setIncomes] = useState([]); // place to store incomes
@@ -77,7 +78,16 @@ const Country = ({ data, ...rest }) => {
         }
     }, [countryData, endDate, paymentDate])
 
-
+    // Calculate/recalculate values
+    useEffect(() => {
+        const { diet, dietFactor, monthlyIncomeCost } = countryData;
+        if (startDate && (endDate || paymentDate)) {
+            setWorkDays(dateDiff(startDate, endDate, daysInPoland));
+            setWorkMonths(daysToMonths(workDays));
+        }
+    },
+        [countryData, startDate, endDate, paymentDate, daysInPoland, workDays]
+    )
 
 
 
@@ -200,7 +210,7 @@ const Country = ({ data, ...rest }) => {
                     countryData.inputs.manual.includes("daysInPoland") &&
                     <InputField>
                         <InputLabel
-                            label='Dni spędzone w Polsce'
+                            label='Ilość dni spędzonych w Polsce'
                             labelFor="daysInPoland"
                         />
                         <TextField
@@ -208,6 +218,8 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Dni w Polsce"
+                            value={daysInPoland}
+                            onChange={e => setDaysInPoland(Number(e.target.value))}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -229,7 +241,7 @@ const Country = ({ data, ...rest }) => {
                             sublabels={currencyValueDateAPI ?
                                 `${toPolishDateFormat(currencyValueDateAPI)}, ${currencyTable}`
                                 :
-                                "Brak danych o kursie waluty"}
+                                ""}
                         />
                         <TextField
                             id="currencyValue"
@@ -272,17 +284,19 @@ const Country = ({ data, ...rest }) => {
                     </InputField>
                 }
                 {
-                    countryData.inputs.auto.includes("dayAllowanceValue") &&
+                    countryData.inputs.auto.includes("dailyDiet") &&
                     <InputField>
                         <InputLabel
                             label='Wysokość diety za dzień'
-                            labelFor="dayAllowanceValue"
+                            labelFor="dailyDiet"
                         />
                         <TextField
-                            id="dayAllowanceValue"
+                            id="dailyDiet"
                             type="number"
                             variant="outlined"
                             label="Wysokość diety za dzień"
+                            value={dailyDiet}
+                            onChange={e => setDailyDiet(Number(Number(e.target.value).toFixed(2)))}
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
@@ -306,6 +320,8 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Ilość dni zagranicą"
+                            value={workDays}
+                            onChange={e => setWorkDays(Number(e.target.value))}
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
