@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, styled } from '@material-ui/styles';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import { globalStyles } from 'theme';
@@ -11,13 +11,26 @@ import ROUTES from 'routes';
 
 const useStyles = makeStyles(globalStyles);
 
+const MyToastContainer = styled(ToastContainer)({
+  "& .Toastify__toast": {
+    padding: '25px',
+    fontSize: '14px',
+  },
+  "& .Toastify__close-button": {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+  }
+})
+
+
 const App = () => {
   useStyles();
 
   return (
     <AppWrapper>
       <Router>
-        <ToastContainer />
+        <MyToastContainer />
         <Switch>
           <Route path="/" exact>
             <Redirect to={ROUTES.taxTool} />

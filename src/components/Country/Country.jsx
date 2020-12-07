@@ -70,8 +70,9 @@ const Country = ({ data, ...rest }) => {
                     setCurrencyTable(currencyTable);
                 })
                 .catch(error => {
-                    toast.error('Wystąpił błąd przy pobieraniu danych waluty. Sprawdź czy masz połączenie z internetem lub czy podane daty są prawidłowe', {
+                    toast.error('Wystąpił błąd przy pobieraniu danych waluty. Sprawdź czy masz połączenie z internetem lub czy podane daty są prawidłowe.', {
                         position: 'top-center',
+                        toastId: 'currency-data-error-toast',
                     });
                     console.error(error);
                 })
