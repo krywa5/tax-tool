@@ -1,5 +1,5 @@
+TODO:
 - Przypomnienie hasła
-
 
 
 
@@ -81,3 +81,10 @@ WSPÓLNE:
 - Ilość dni zagranicą
 - Wartość diet
 - Wartość przychodu
+
+
+Obliczanie przychodu
+Niemcy: (income + holidayIncome - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost
+Francja: (income - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost
+Belgia: (income - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost
+Holandia: (income - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost

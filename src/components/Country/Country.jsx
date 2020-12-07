@@ -28,8 +28,6 @@ const Country = ({ data, ...rest }) => {
     const [countryData, setCountryData] = useState(data);
     const [isTipsActive, setIsTipsActive] = useState(false);
     // CALCULATION VALUES
-    const [allowanceValue, setAllowanceValue] = useState(countryData.diet);
-    const [monthlyIncomeCost, setMonthlyIncomeCost] = useState(countryData.monthlyIncomeCost);
     const [dailyDiet, setDailyDiet] = useState(Number((countryData.diet * countryData.dietFactor).toFixed(2)));
     const [income, setIncome] = useState(0);
     const [paidTax, setPaidTax] = useState(0);
@@ -37,7 +35,6 @@ const Country = ({ data, ...rest }) => {
     const [holidayIncome, setHolidayIncome] = useState(0);
     const [paymentDate, setPaymentDate] = useState('');
     const [currencyValue, setCurrencyValue] = useState(0);
-    const [currencyValueDate, setCurrencyValueDate] = useState('');
     const [currencyValueDateAPI, setCurrencyValueDateAPI] = useState('');
     const [currencyTable, setCurrencyTable] = useState('');
     const [workDays, setWorkDays] = useState(0);
@@ -61,12 +58,14 @@ const Country = ({ data, ...rest }) => {
         if (endDate || paymentDate) {
             const properDate = paymentDate || endDate; // if paymentDate is inserted it has priority over endDate
 
+            clearAPIValues();
+
             currencyFetch(getLastWorkingDay(properDate), currency)
                 .then((data) => {
                     const { effectiveDate: currencyValueDateAPI, mid: currencyValueApi, no: currencyTable } = data.rates[0];
 
                     setCurrencyValueDateAPI(currencyValueDateAPI);
-                    setCurrencyValue(currencyValueApi);
+                    setCurrencyValue(Number(currencyValueApi.toFixed(4)));
                     setCurrencyTable(currencyTable);
                 })
                 .catch(error => {
@@ -81,7 +80,6 @@ const Country = ({ data, ...rest }) => {
 
     // Calculate/recalculate values
     useEffect(() => {
-        const { diet, dietFactor, monthlyIncomeCost } = countryData;
         if (startDate && (endDate || paymentDate)) {
             setWorkDays(dateDiff(startDate, endDate, daysInPoland));
             setWorkMonths(daysToMonths(workDays));
@@ -90,7 +88,33 @@ const Country = ({ data, ...rest }) => {
         [countryData, startDate, endDate, paymentDate, daysInPoland, workDays]
     )
 
+    const clearAPIValues = () => {
+        setCurrencyValueDateAPI('');
+        setCurrencyValue(0);
+        setCurrencyTable('');
+    }
 
+    const getAllIncomeValue = () => {
+        // if there is no currency value return 0
+        if (!currencyValue) return (0).toFixed(2);
+
+        // Germany: (income + holidayIncome - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost
+        const allIncome = (income + holidayIncome - workDays * dailyDiet) * currencyValue - workMonths * countryData.monthlyIncomeCost;
+
+        const output = allIncome.toFixed(2);
+
+        return output;
+    }
+
+    const getTaxValue = () => {
+        // if there is no currency value return 0
+        if (!currencyValue) return (0).toFixed(2);
+
+        const taxValue = paidTax * currencyValue;
+
+        const output = taxValue.toFixed(2);
+        return output;
+    }
 
     return (
         <Container component={'div'} className={classes.wrapper} disableGutters >
@@ -122,12 +146,37 @@ const Country = ({ data, ...rest }) => {
                     </InputField>
                 }
                 {
+                    countryData.inputs.manual.includes("holidayIncome") &&
+                    <InputField>
+                        <InputLabel
+                            label='Przychód wakacyjny'
+                            labelFor="holidayIncome"
+                            sublabels={countryData.intl.holidayIncome}
+                        />
+                        <TextField
+                            id="holidayIncome"
+                            label="Przychód wakacyjny"
+                            type="number"
+                            variant="outlined"
+                            value={holidayIncome}
+                            onChange={e => setHolidayIncome(strToNum(e.target.value))}
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
+                                inputProps: {
+                                    step: 0.01,
+                                    min: 0,
+                                }
+                            }}
+                        />
+                    </InputField>
+                }
+                {
                     countryData.inputs.manual?.includes("paidTax") &&
                     <InputField>
                         <InputLabel
                             label='Podatek'
                             labelFor="paidTax"
-                            sublabels={countryData.intl.tax}
+                            sublabels={countryData.intl.paidTax}
                         />
                         <TextField
                             id="paidTax"
@@ -249,7 +298,8 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Kurs waluty"
-                            value={currencyValue}
+                            value={currencyValue.toFixed(4)}
+                            onChange={e => setCurrencyValue(Number(Number((e.target.value)).toFixed(4)))}
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
@@ -296,13 +346,13 @@ const Country = ({ data, ...rest }) => {
                             type="number"
                             variant="outlined"
                             label="Wysokość diety za dzień"
-                            value={dailyDiet}
+                            value={dailyDiet.toFixed(2)}
                             onChange={e => setDailyDiet(Number(Number(e.target.value).toFixed(2)))}
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
-                                    step: 0.1,
+                                    step: 0.01,
                                 },
                                 endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
                             }}
@@ -328,6 +378,7 @@ const Country = ({ data, ...rest }) => {
                                 inputProps: {
                                     min: 0,
                                     max: 366,
+                                    readOnly: true,
                                 }
                             }}
                         />
@@ -346,13 +397,13 @@ const Country = ({ data, ...rest }) => {
                             variant="outlined"
                             label="Wartość diet"
                             InputLabelProps={{ shrink: true }}
+                            value={(workDays * dailyDiet).toFixed(2)}
                             InputProps={{
                                 inputProps: {
                                     readOnly: true,
                                 },
                                 endAdornment: <InputAdornment position="end">{countryData.currency}</InputAdornment>,
                             }}
-
                         />
                     </InputField>
                 }
@@ -362,6 +413,7 @@ const Country = ({ data, ...rest }) => {
                         <InputLabel
                             label='Wartość podatku'
                             labelFor="taxValue"
+                            sublabels={countryData.sublabels.taxValue}
                         />
                         <TextField
                             id="taxValue"
@@ -369,6 +421,7 @@ const Country = ({ data, ...rest }) => {
                             variant="outlined"
                             label="Wartość podatku"
                             InputLabelProps={{ shrink: true }}
+                            value={getTaxValue()}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -386,6 +439,7 @@ const Country = ({ data, ...rest }) => {
                         <InputLabel
                             label='Wartość przychodu'
                             labelFor="allIncomeValue"
+                            sublabels={countryData.sublabels.allIncomeValue}
                         />
                         <TextField
                             id="allIncomeValue"
@@ -393,6 +447,7 @@ const Country = ({ data, ...rest }) => {
 
                             variant="outlined"
                             label="Wartość przychodu"
+                            value={getAllIncomeValue()}
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
