@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const CountryFlag = ({ country }) => {
+const CountryFlag = ({ country, countryLabel }) => {
     const classes = useStyles();
     const history = useHistory();
     const { selectedCountry, setSelectedCountry } = useContext(AppContext);
@@ -82,7 +82,7 @@ const CountryFlag = ({ country }) => {
 
     return (
         <li className={`${classes.listItem} ${country === selectedCountry ? 'selected' : ''}`} onClick={clickHandler}>
-            <img src={getProperFlag()} alt="country flag" />
+            <img src={getProperFlag()} alt="country flag" title={countryLabel} />
         </li>
     );
 }

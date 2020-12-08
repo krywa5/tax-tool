@@ -30,7 +30,7 @@ const CountryFlags = () => {
             {isDataLoading ?
                 <Loader />
                 :
-                countriesData.map(country => <CountryFlag key={country.id} country={country.id} />)
+                countriesData.map(country => <CountryFlag key={country.id} country={country.id} countryLabel={country.label} />)
             }
         </Grid>
     );

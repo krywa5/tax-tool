@@ -1,4 +1,4 @@
-import { Container, InputAdornment, TextField } from '@material-ui/core';
+import { Container, InputAdornment, TextField, Button } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
@@ -18,6 +18,20 @@ const useStyles = makeStyles(theme => ({
     container: {
         paddingLeft: '50px',
         paddingRight: '50px',
+    },
+    submitButton: {
+        borderRadius: '0',
+        padding: '12px 22px',
+        letterSpacing: '1px',
+        fontSize: '1.5rem',
+        boxShadow: 'unset',
+        borderTop: '1px solid #000',
+        borderBottom: '1px solid #000',
+
+        "&:disabled": {
+            cursor: 'not-allowed',
+            pointerEvents: 'auto',
+        },
     }
 }))
 
@@ -35,7 +49,7 @@ const Country = ({ data, ...rest }) => {
     const [holidayIncome, setHolidayIncome] = useState(0); // przychód wakacyjny (tylko w Niemczech)
     const [paymentDate, setPaymentDate] = useState(''); // data wypłaty
     const [currencyValue, setCurrencyValue] = useState(0); // średni kurs waluty z NBP
-    const [currencyValueDateAPI, setCurrencyValueDateAPI] = useState(''); // data średniego kursu waluty z NBP
+    const [currencyValueDate, setCurrencyValueDate] = useState(''); // data średniego kursu waluty z NBP
     const [currencyTable, setCurrencyTable] = useState(''); // tabela waluty
     const [workDays, setWorkDays] = useState(0); // ilość dni zagranicą
     const [workMonths, setWorkMonths] = useState(0); // ilość miesięcy zagranicą
@@ -62,9 +76,9 @@ const Country = ({ data, ...rest }) => {
 
             currencyFetch(getLastWorkingDay(properDate), currency)
                 .then((data) => {
-                    const { effectiveDate: currencyValueDateAPI, mid: currencyValueApi, no: currencyTable } = data.rates[0];
+                    const { effectiveDate: currencyValueDate, mid: currencyValueApi, no: currencyTable } = data.rates[0];
 
-                    setCurrencyValueDateAPI(currencyValueDateAPI);
+                    setCurrencyValueDate(currencyValueDate);
                     setCurrencyValue(Number(currencyValueApi.toFixed(4)));
                     setCurrencyTable(currencyTable);
                 })
@@ -89,31 +103,63 @@ const Country = ({ data, ...rest }) => {
     )
 
     const clearAPIValues = () => {
-        setCurrencyValueDateAPI('');
+        setCurrencyValueDate('');
         setCurrencyValue(0);
         setCurrencyTable('');
     }
 
     const getAllIncomeValue = () => {
         // if there is no currency value return 0
-        if (!currencyValue) return (0).toFixed(2);
+        if (!currencyValue) return 0;
 
         // Germany: (income + holidayIncome - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost
         const allIncome = (income + holidayIncome - workDays * dailyDiet) * currencyValue - workMonths * countryData.monthlyIncomeCost;
 
-        const output = allIncome.toFixed(2);
-
+        const output = Number(allIncome.toFixed(2));
         return output;
     }
 
     const getTaxValue = () => {
         // if there is no currency value return 0
-        if (!currencyValue) return (0).toFixed(2);
+        if (!currencyValue) return 0;
 
         const taxValue = paidTax * currencyValue;
 
-        const output = taxValue.toFixed(2);
+        const output = Number(taxValue.toFixed(2));
         return output;
+    }
+
+    const addToIncomeList = () => {
+        if (!getAllIncomeValue()) {
+            return;
+        }
+
+        const newIncome = {
+            currencyTable,
+            currencyValue,
+            currencyValueDate,
+            daysInPoland,
+            endDate,
+            holidayIncome,
+            id: Date.now(),
+            incomeAbroad: income,
+            incomePLN: getAllIncomeValue(),
+            paidTax,
+            paymentDate: paymentDate ? paymentDate : endDate,
+            startDate,
+            taxPLN: getTaxValue(),
+        }
+
+        setIncomes(prevVal => [...prevVal, newIncome]);
+        clearInputs();
+    }
+
+    const clearInputs = () => {
+        setIncome(0);
+        setPaidTax(0);
+        setHolidayIncome(0);
+        setDaysInPoland(0);
+        clearAPIValues();
     }
 
     return (
@@ -288,8 +334,8 @@ const Country = ({ data, ...rest }) => {
                         <InputLabel
                             label='Kurs waluty'
                             labelFor="currencyValue"
-                            sublabels={currencyValueDateAPI ?
-                                `${toPolishDateFormat(currencyValueDateAPI)}, ${currencyTable}`
+                            sublabels={currencyValueDate ?
+                                `${toPolishDateFormat(currencyValueDate)}, ${currencyTable}`
                                 :
                                 ""}
                         />
@@ -421,7 +467,7 @@ const Country = ({ data, ...rest }) => {
                             variant="outlined"
                             label="Wartość podatku"
                             InputLabelProps={{ shrink: true }}
-                            value={getTaxValue()}
+                            value={getTaxValue().toFixed(2)}
                             InputProps={{
                                 inputProps: {
                                     min: 0,
@@ -447,7 +493,7 @@ const Country = ({ data, ...rest }) => {
 
                             variant="outlined"
                             label="Wartość przychodu"
-                            value={getAllIncomeValue()}
+                            value={getAllIncomeValue().toFixed(2)}
                             InputLabelProps={{ shrink: true }}
                             InputProps={{
                                 inputProps: {
@@ -461,6 +507,9 @@ const Country = ({ data, ...rest }) => {
                     </InputField>
                 }
             </Container>
+            <Button onClick={addToIncomeList} disabled={!Number(getAllIncomeValue())} fullWidth={true} color={"secondary"} variant="contained" size="large" className={classes.submitButton}>
+                Dodaj do listy
+            </Button>
         </Container>
     );
 }
