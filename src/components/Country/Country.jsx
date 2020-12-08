@@ -1,6 +1,6 @@
-import { Container, InputAdornment, TextField, Button } from '@material-ui/core';
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { Container, InputAdornment, TextField, Button, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
-import React, { useState, useEffect, useContext } from 'react';
 import { FieldGroupDivider, InputField, InputLabel } from 'components';
 import { makeStyles } from '@material-ui/styles';
 import { strToNum, getLastWorkingDay, toPolishDateFormat, dateDiff, daysToMonths } from 'utils';
@@ -32,11 +32,26 @@ const useStyles = makeStyles(theme => ({
             cursor: 'not-allowed',
             pointerEvents: 'auto',
         },
-    }
+    },
+    incomeListWrapper: {
+        padding: '50px 20px',
+    },
+    table: {
+        "& thead th": {
+            fontWeight: 600,
+            fontSize: '1rem',
+            textAlign: 'center',
+        }
+    },
+    incomeListTitle: {
+        fontWeight: 700,
+        marginBottom: '20px',
+    },
 }))
 
 const Country = ({ data, ...rest }) => {
     const classes = useStyles();
+    const firstInput = useRef();
     const { setSelectedCountry, selectedCountry } = useContext(AppContext);
     // insert data from context to component's state. USE STATE DATA INSIDE COUNTRY COMPONENT!
     const [countryData, setCountryData] = useState(data); // dane o kraju z bazy danych
@@ -116,7 +131,7 @@ const Country = ({ data, ...rest }) => {
         const allIncome = (income + holidayIncome - workDays * dailyDiet) * currencyValue - workMonths * countryData.monthlyIncomeCost;
 
         const output = Number(allIncome.toFixed(2));
-        return output;
+        return Math.max(output, 0);
     }
 
     const getTaxValue = () => {
@@ -126,7 +141,7 @@ const Country = ({ data, ...rest }) => {
         const taxValue = paidTax * currencyValue;
 
         const output = Number(taxValue.toFixed(2));
-        return output;
+        return Math.max(output, 0);
     }
 
     const addToIncomeList = () => {
@@ -159,12 +174,13 @@ const Country = ({ data, ...rest }) => {
         setPaidTax(0);
         setHolidayIncome(0);
         setDaysInPoland(0);
-        clearAPIValues();
+
+        firstInput.current.focus();
     }
 
     return (
-        <Container component={'div'} className={classes.wrapper} disableGutters >
-            <Container className={classes.container}>
+        <Container component={'div'} className={classes.wrapper} disableGutters maxWidth={false}>
+            <Container className={classes.container} maxWidth={false}>
                 {
                     countryData.inputs.manual.includes("income") &&
                     <InputField>
@@ -186,6 +202,7 @@ const Country = ({ data, ...rest }) => {
                                 inputProps: {
                                     step: 0.01,
                                     min: 0,
+                                    ref: firstInput,
                                 }
                             }}
                         />
@@ -251,6 +268,7 @@ const Country = ({ data, ...rest }) => {
                         <TextField
                             id="startDate"
                             type="date"
+                            defaultValue={startDate}
                             variant="outlined"
                             onBlur={e => setStartDate(e.target.value)}
                             InputProps={{
@@ -272,6 +290,7 @@ const Country = ({ data, ...rest }) => {
                             id="endDate"
                             type="date"
                             variant="outlined"
+                            defaultValue={endDate}
                             onBlur={e => setEndDate(e.target.value)}
                             InputProps={{
                                 inputProps: {
@@ -293,6 +312,7 @@ const Country = ({ data, ...rest }) => {
                             id="paymentDate"
                             type="date"
                             variant="outlined"
+                            defaultValue={paymentDate}
                             onBlur={e => setPaymentDate(e.target.value)}
                             InputProps={{
                                 inputProps: {
@@ -327,7 +347,7 @@ const Country = ({ data, ...rest }) => {
                 }
             </Container>
             <FieldGroupDivider text="Wartości poniżej są obliczane automatycznie" />
-            <Container className={classes.container}>
+            <Container className={classes.container} maxWidth={false}>
                 {
                     countryData.inputs.auto.includes("currencyValue") &&
                     <InputField>
@@ -510,6 +530,59 @@ const Country = ({ data, ...rest }) => {
             <Button onClick={addToIncomeList} disabled={!Number(getAllIncomeValue())} fullWidth={true} color={"secondary"} variant="contained" size="large" className={classes.submitButton}>
                 Dodaj do listy
             </Button>
+            <Container className={classes.incomeListWrapper} maxWidth={false}>
+                <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
+                <TableContainer>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Lp.</TableCell>
+                                {
+                                    countryData.inputs.manual.includes("startDate") &&
+                                    <TableCell>Data rozpoczęcia</TableCell>
+                                }
+                                {
+                                    countryData.inputs.manual.includes("endDate") &&
+                                    <TableCell>Data zakończenia</TableCell>
+                                }
+                                {
+                                    countryData.inputs.manual.includes("paymentDate") &&
+                                    <TableCell>Data wypłaty</TableCell>
+                                }
+                                {
+                                    countryData.inputs.manual.includes("daysInPoland") &&
+                                    <TableCell>Dni w Polsce</TableCell>
+                                }
+                                <TableCell>Tabela</TableCell>
+                                <TableCell>Kurs waluty</TableCell>
+                                {
+                                    countryData.inputs.manual.includes("paidTax") &&
+                                    <TableCell>Podatek {countryData.currency}</TableCell>
+                                }
+                                {
+                                    countryData.inputs.manual.includes("holidayIncome") &&
+                                    <TableCell>Przychód wakacyjny</TableCell>
+                                }
+                                {
+                                    countryData.inputs.manual.includes("income") &&
+                                    <TableCell>Przychód {countryData.currency}</TableCell>
+                                }
+                                {
+                                    countryData.inputs.manual.includes("paidTax") &&
+                                    <TableCell>Podatek PLN</TableCell>
+                                }
+                                <TableCell>Przychód PLN</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+
+                        </TableBody>
+                        <TableFooter>
+
+                        </TableFooter>
+                    </Table>
+                </TableContainer>
+            </Container>
         </Container>
     );
 }

@@ -10,7 +10,7 @@ import { AppContext } from 'context/UserContext';
 const useStyles = makeStyles(theme => ({
     wrapper: ({ selectedCountry }) => ({
         margin: `${theme.spacing(10)}px auto ${theme.spacing(10)}px`,
-        maxWidth: selectedCountry ? '1024px' : '800px',
+        maxWidth: selectedCountry ? '1300px' : '800px',
         padding: `${theme.spacing(3)}px 0`,
         display: 'flex',
         flexDirection: 'column',
