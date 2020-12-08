@@ -25,23 +25,23 @@ const Country = ({ data, ...rest }) => {
     const classes = useStyles();
     const { setSelectedCountry, selectedCountry } = useContext(AppContext);
     // insert data from context to component's state. USE STATE DATA INSIDE COUNTRY COMPONENT!
-    const [countryData, setCountryData] = useState(data);
+    const [countryData, setCountryData] = useState(data); // dane o kraju z bazy danych
     const [isTipsActive, setIsTipsActive] = useState(false);
     // CALCULATION VALUES
-    const [dailyDiet, setDailyDiet] = useState(Number((countryData.diet * countryData.dietFactor).toFixed(2)));
-    const [income, setIncome] = useState(0);
-    const [paidTax, setPaidTax] = useState(0);
-    const [incomes, setIncomes] = useState([]); // place to store incomes
-    const [holidayIncome, setHolidayIncome] = useState(0);
-    const [paymentDate, setPaymentDate] = useState('');
-    const [currencyValue, setCurrencyValue] = useState(0);
-    const [currencyValueDateAPI, setCurrencyValueDateAPI] = useState('');
-    const [currencyTable, setCurrencyTable] = useState('');
-    const [workDays, setWorkDays] = useState(0);
-    const [workMonths, setWorkMonths] = useState(0);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [daysInPoland, setDaysInPoland] = useState(0);
+    const [dailyDiet, setDailyDiet] = useState(Number((countryData.diet * countryData.dietFactor).toFixed(2))); // dzienna dieta wyznaczona na podstawie tabeli diet zagranicznych
+    const [income, setIncome] = useState(0); // przychód brutto
+    const [paidTax, setPaidTax] = useState(0); // zapłacony podatek zagranicą
+    const [incomes, setIncomes] = useState([]); // tablica do trzymania listy wyników kalkulatora
+    const [holidayIncome, setHolidayIncome] = useState(0); // przychód wakacyjny (tylko w Niemczech)
+    const [paymentDate, setPaymentDate] = useState(''); // data wypłaty
+    const [currencyValue, setCurrencyValue] = useState(0); // średni kurs waluty z NBP
+    const [currencyValueDateAPI, setCurrencyValueDateAPI] = useState(''); // data średniego kursu waluty z NBP
+    const [currencyTable, setCurrencyTable] = useState(''); // tabela waluty
+    const [workDays, setWorkDays] = useState(0); // ilość dni zagranicą
+    const [workMonths, setWorkMonths] = useState(0); // ilość miesięcy zagranicą
+    const [startDate, setStartDate] = useState(''); // data rozpoczęcia pracy
+    const [endDate, setEndDate] = useState(''); // data zakończenia pracy
+    const [daysInPoland, setDaysInPoland] = useState(0); // ilość spędzonych w Polsce podczas pracy zagranicą
 
     // get Country Data
     useEffect(() => {

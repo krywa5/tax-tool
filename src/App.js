@@ -15,6 +15,7 @@ const MyToastContainer = styled(ToastContainer)({
   "& .Toastify__toast": {
     padding: '25px',
     fontSize: '14px',
+    borderRadius: '4px',
   },
   "& .Toastify__close-button": {
     position: 'absolute',

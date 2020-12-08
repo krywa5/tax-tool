@@ -9,7 +9,8 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         borderTop: `1px solid ${theme.palette.common.black}`,
         borderBottom: `1px solid ${theme.palette.common.black}`,
-        background: theme.palette.secondary.main,
+        background: theme.palette.primary.dark,
+        color: theme.palette.common.white,
     }
 }))
 
