@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Container, InputAdornment, TextField } from '@material-ui/core';
 import { InputField, InputLabel } from 'components';
-import { strToNum, toPolishDateFormat } from 'utils';
+import { toPolishDateFormat } from 'utils';
 import { CountryContext } from 'context/CountryContext';
 
 const AutoFields = ({ className }) => {
-    const { countryData, calculator, setCalculatorValue, getTaxValue, getAllIncomeValue } = useContext(CountryContext);
+    const { countryData, calculator, setCalculatorValue } = useContext(CountryContext);
 
-    const { currencyValueDate, currencyTable, currencyValue, workMonths, dailyDiet, workDays } = calculator;
+    const { currencyValueDate, currencyTable, currencyValue, workMonths, dailyDiet, workDays, taxValue, allIncomeValue } = calculator;
+
 
     return (
         <Container className={className} maxWidth={false}>
@@ -150,7 +151,7 @@ const AutoFields = ({ className }) => {
                         variant="outlined"
                         label="Wartość podatku"
                         InputLabelProps={{ shrink: true }}
-                        value={getTaxValue().toFixed(2)}
+                        value={taxValue.toFixed(2)}
                         InputProps={{
                             inputProps: {
                                 min: 0,
@@ -176,7 +177,7 @@ const AutoFields = ({ className }) => {
 
                         variant="outlined"
                         label="Wartość przychodu"
-                        value={getAllIncomeValue().toFixed(2)}
+                        value={allIncomeValue.toFixed(2)}
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
                             inputProps: {
@@ -190,6 +191,7 @@ const AutoFields = ({ className }) => {
                 </InputField>
             }
         </Container>
+
     );
 }
 

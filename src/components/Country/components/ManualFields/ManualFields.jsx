@@ -6,7 +6,6 @@ import { CountryContext } from 'context/CountryContext';
 
 const ManualFields = ({ firstInput, className }) => {
     const { countryData, calculator, setCalculatorValue } = useContext(CountryContext);
-
     const { income, holidayIncome, paidTax, startDate, endDate, paymentDate, daysInPoland } = calculator;
 
     return (

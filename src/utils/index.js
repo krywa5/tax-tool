@@ -27,7 +27,8 @@ export const strToNum = (string = '') => {
 
 
 export const getLastWorkingDay = (date) => {
-    if (!date) return;
+    if (!date) return false;
+
     let output = false;
     let newDate = new Date(date);
     newDate.setDate(newDate.getDate() - 1);

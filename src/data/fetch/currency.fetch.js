@@ -5,7 +5,7 @@ export const currencyFetch = async (currencyValueDate = '', currency = 'EUR') =>
 
     const response = await fetch(API_URL, {
         headers: {
-            "X-Requested-With": "XMLHttpRequest"
+            "X-Requested-With": "XMLHttpRequest",
         },
     });
     const data = await response.json();

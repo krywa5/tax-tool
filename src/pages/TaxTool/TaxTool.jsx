@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { Paper, makeStyles, Collapse } from '@material-ui/core';
+import { Paper, makeStyles } from '@material-ui/core';
 
 import ROUTES from 'routes';
 import { auth, db } from 'data/service/firebase.service';
 import { LogoutButton, Loader, Logo, CountrySelect, Country } from 'components';
 import { AppContext } from 'context/UserContext';
+import CountryProvider from 'context/CountryContext';
 
 const useStyles = makeStyles(theme => ({
     wrapper: ({ selectedCountry }) => ({
@@ -18,9 +19,6 @@ const useStyles = makeStyles(theme => ({
         animation: `fadeSlideIn ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut} both`,
         transition: `max-width ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut}`,
     }),
-    collapse: {
-        width: "100%",
-    }
 }))
 
 const TaxTool = () => {
@@ -65,30 +63,15 @@ const TaxTool = () => {
                         <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Logo />
                             <CountrySelect />
-                            <Collapse in={!!selectedCountry} timeout={1500} collapsedHeight='90px' className={classes.collapse} component='article' >
-                                <Switch>
-                                    {/* <Route path={ROUTES.netherlands}>
-                                    <Netherlands />
-                                </Route>
-                                <Route path={ROUTES.belgium}>
-                                    <Belgium />
-                                </Route>
-                                <Route path={ROUTES.france}>
-                                    <France />
-                                </Route>
-                                <Route path={ROUTES.germany}>
-                                    <Germany />
-                                </Route> */}
-
-
-                                    {countriesData.map(country => (
-                                        <Route key={country.id} path={`${ROUTES.taxTool}/${country.id}`}>
+                            <Switch>
+                                {countriesData.map(country => (
+                                    <Route path={`${ROUTES.taxTool}/${country.id}`} key={country.id} >
+                                        <CountryProvider data={country} >
                                             <Country data={country} />
-                                        </Route>
-                                    ))}
-                                </Switch>
-                            </Collapse>
-
+                                        </CountryProvider>
+                                    </Route>
+                                ))}
+                            </Switch>
                         </Paper>
                     </>
                 ) :

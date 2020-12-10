@@ -1,6 +1,7 @@
 import React from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { uid } from 'react-uid';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -60,8 +61,12 @@ const IncomesTable = ({ incomeList, countryData }) => {
                 </TableHead>
                 <TableBody>
                     {incomeList.map(income => (
-                        <TableRow>
-
+                        <TableRow key={uid(income)}>
+                            {/* <TableCell></TableCell>
+                            {
+                                countryData.inputs.manual.includes("startDate") &&
+                                <TableCell></TableCell>
+                            } */}
                         </TableRow>
                     ))}
                 </TableBody>
