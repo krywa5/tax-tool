@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
-import { uid } from 'react-uid';
 import { numToStr, toPolishDateFormat } from 'utils';
+import { CountryContext } from 'context/CountryContext';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 const IncomesTable = ({ incomeList, countryData }) => {
     const classes = useStyles();
+    const { removeIncome } = useContext(CountryContext);
 
     return (
         <TableContainer>
@@ -70,11 +71,11 @@ const IncomesTable = ({ incomeList, countryData }) => {
                 </TableHead>
                 <TableBody>
                     {incomeList.map((incomeData, index) => {
-                        const { startDate, endDate, incomeAbroad, paidTax, holidayIncome, paymentDate, currencyValue, currencyTable, daysInPoland, taxPLN, incomePLN } = incomeData;
+                        const { id, startDate, endDate, incomeAbroad, paidTax, holidayIncome, paymentDate, currencyValue, currencyTable, daysInPoland, taxPLN, incomePLN } = incomeData;
                         const { manual: manualFields, auto: autoFields } = countryData.inputs;
 
                         return (
-                            <TableRow key={uid(incomeData)}>
+                            <TableRow key={id}>
                                 <TableCell>{index + 1}.</TableCell>
                                 {
                                     manualFields.includes("startDate") &&
@@ -112,7 +113,7 @@ const IncomesTable = ({ incomeList, countryData }) => {
                                 }
                                 <TableCell>{numToStr(incomePLN)}</TableCell>
                                 <TableCell>
-                                    <IconButton aria-label="delete" size='small' className={classes.deleteBtn}>
+                                    <IconButton aria-label="delete" size='small' className={classes.deleteBtn} onClick={() => removeIncome(id)}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </TableCell>

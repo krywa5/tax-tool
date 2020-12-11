@@ -59,6 +59,13 @@ const CountryProvider = ({ data, children }) => {
         return;
     }
 
+    const removeIncome = incomeId => {
+        const state = [...calculator.incomes];
+        const newIncomes = state.filter(income => income.id !== incomeId);
+
+        return setCalculatorValue('incomes', newIncomes);
+    }
+
 
     // Calculate/recalculate calculator values dependent on start and end dates
     useEffect(() => {
@@ -133,6 +140,7 @@ const CountryProvider = ({ data, children }) => {
             calculator,
             setCalculatorValue,
             addNewIncome,
+            removeIncome,
         }}>
             {children}
         </CountryContext.Provider>
