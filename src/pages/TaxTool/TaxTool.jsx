@@ -50,7 +50,7 @@ const TaxTool = () => {
     // }, [history, setIsUserLogged, getCountriesData]);
 
     useEffect(() => {
-        getCountriesData()
+        getCountriesData();
     }, [getCountriesData])
 
 

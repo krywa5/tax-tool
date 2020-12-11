@@ -1,7 +1,9 @@
 import React from 'react';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter } from '@material-ui/core';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
 import { uid } from 'react-uid';
+import { numToStr, toPolishDateFormat } from 'utils';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -9,9 +11,15 @@ const useStyles = makeStyles(theme => ({
             fontWeight: 600,
             fontSize: '1rem',
             textAlign: 'center',
+        },
+        "& td": {
+            textAlign: 'center',
         }
     },
-}))
+    deleteBtn: {
+        color: theme.palette.error.dark,
+    }
+}));
 
 const IncomesTable = ({ incomeList, countryData }) => {
     const classes = useStyles();
@@ -57,18 +65,60 @@ const IncomesTable = ({ incomeList, countryData }) => {
                             <TableCell>Podatek PLN</TableCell>
                         }
                         <TableCell>Przychód PLN</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {incomeList.map(income => (
-                        <TableRow key={uid(income)}>
-                            {/* <TableCell></TableCell>
-                            {
-                                countryData.inputs.manual.includes("startDate") &&
-                                <TableCell></TableCell>
-                            } */}
-                        </TableRow>
-                    ))}
+                    {incomeList.map((incomeData, index) => {
+                        const { startDate, endDate, incomeAbroad, paidTax, holidayIncome, paymentDate, currencyValue, currencyTable, daysInPoland, taxPLN, incomePLN } = incomeData;
+                        const { manual: manualFields, auto: autoFields } = countryData.inputs;
+
+                        return (
+                            <TableRow key={uid(incomeData)}>
+                                <TableCell>{index + 1}.</TableCell>
+                                {
+                                    manualFields.includes("startDate") &&
+                                    <TableCell>{toPolishDateFormat(startDate)}</TableCell>
+                                }
+                                {
+                                    manualFields.includes("endDate") &&
+                                    <TableCell>{toPolishDateFormat(endDate)}</TableCell>
+                                }
+                                {
+                                    manualFields.includes("paymentDate") &&
+                                    <TableCell>{toPolishDateFormat(paymentDate)}</TableCell>
+                                }
+                                {
+                                    manualFields.includes("daysInPoland") &&
+                                    <TableCell>{daysInPoland}</TableCell>
+                                }
+                                <TableCell>{currencyTable}</TableCell>
+                                <TableCell>{numToStr(currencyValue, 4)}</TableCell>
+                                {
+                                    manualFields.includes("holidayIncome") &&
+                                    <TableCell>{numToStr(holidayIncome)}</TableCell>
+                                }
+                                {
+                                    manualFields.includes("paidTax") &&
+                                    <TableCell>{numToStr(paidTax)}</TableCell>
+                                }
+                                {
+                                    manualFields.includes("income") &&
+                                    <TableCell>{numToStr(incomeAbroad)}</TableCell>
+                                }
+                                {
+                                    autoFields.includes("taxValue") &&
+                                    <TableCell>{numToStr(taxPLN)}</TableCell>
+                                }
+                                <TableCell>{numToStr(incomePLN)}</TableCell>
+                                <TableCell>
+                                    <IconButton aria-label="delete" size='small' className={classes.deleteBtn}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
                 <TableFooter>
 
@@ -78,4 +128,4 @@ const IncomesTable = ({ incomeList, countryData }) => {
     );
 }
 
-export default IncomesTable;
+export default React.memo(IncomesTable);

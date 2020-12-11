@@ -25,6 +25,15 @@ export const strToNum = (string = '') => {
     return Number(Number(string.replace(',', '.')).toFixed(2));
 }
 
+export const numToStr = (number = 0, decimalPlace = 2) => {
+
+    return number.toLocaleString(undefined, {
+        minimumFractionDigits: decimalPlace,
+        maximumFractionDigits: decimalPlace,
+    })
+
+    // return number.toFixed(decimalPlace).replace('.', ',');
+}
 
 export const getLastWorkingDay = (date) => {
     if (!date) return false;
@@ -53,7 +62,7 @@ export const getLastWorkingDay = (date) => {
 
 export const toPolishDateFormat = oldDate => {
     // oldData is expected to be in yyyy-mm-dd
-    return oldDate.toString().split("-").reverse().join("-");
+    return oldDate.toString().split("-").reverse().join(".");
 }
 
 export const dateDiff = (startDate, endDate, daysToSubstract = 0) => {

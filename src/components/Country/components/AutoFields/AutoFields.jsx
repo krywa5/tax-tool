@@ -9,7 +9,6 @@ const AutoFields = ({ className }) => {
 
     const { currencyValueDate, currencyTable, currencyValue, workMonths, dailyDiet, workDays, taxValue, allIncomeValue } = calculator;
 
-
     return (
         <Container className={className} maxWidth={false}>
             {

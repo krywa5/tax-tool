@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const Country = ({ data }) => {
+const Country = () => {
     const classes = useStyles();
     const firstInput = useRef();
 
@@ -102,9 +102,9 @@ const Country = ({ data }) => {
             <ManualFields className={classes.container} firstInput={firstInput} />
             <FieldGroupDivider text="Wartości poniżej są obliczane automatycznie" />
             <AutoFields className={classes.container} />
-            <Button onClick={addToIncomeList} disabled={!allIncomeValue} fullWidth={true} color={"secondary"} variant="contained" size="large" className={classes.submitButton}>
+            <Button onClick={addToIncomeList} disabled={!allIncomeValue} fullWidth={true} color="secondary" variant="contained" size="large" className={classes.submitButton}>
                 Dodaj do listy
-                        </Button>
+            </Button>
             <Container className={classes.incomeListWrapper} maxWidth={false}>
                 <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
                 <IncomesTable
