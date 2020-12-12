@@ -3,6 +3,7 @@ import { Container, InputAdornment, TextField } from '@material-ui/core';
 import { InputField, InputLabel } from 'components';
 import { toPolishDateFormat } from 'utils';
 import { CountryContext } from 'context/CountryContext';
+import { ClickableField } from 'components/Country/components';
 
 const AutoFields = ({ className }) => {
     const { countryData, calculator, setCalculatorValue } = useContext(CountryContext);
@@ -144,22 +145,24 @@ const AutoFields = ({ className }) => {
                         labelFor="taxValue"
                         sublabels={countryData.sublabels.taxValue}
                     />
-                    <TextField
-                        id="taxValue"
-                        type="number"
-                        variant="outlined"
-                        label="Wartość podatku"
-                        InputLabelProps={{ shrink: true }}
-                        value={taxValue.toFixed(2)}
-                        InputProps={{
-                            inputProps: {
-                                min: 0,
-                                step: 0.01,
-                                readOnly: true,
-                            },
-                            endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
-                        }}
-                    />
+                    <ClickableField>
+                        <TextField
+                            id="taxValue"
+                            type="number"
+                            variant="outlined"
+                            label="Wartość podatku"
+                            InputLabelProps={{ shrink: true }}
+                            value={taxValue.toFixed(2)}
+                            InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                    step: 0.01,
+                                    readOnly: true,
+                                },
+                                endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
+                            }}
+                        />
+                    </ClickableField>
                 </InputField>
             }
             {
@@ -170,23 +173,26 @@ const AutoFields = ({ className }) => {
                         labelFor="allIncomeValue"
                         sublabels={countryData.sublabels.allIncomeValue}
                     />
-                    <TextField
-                        id="allIncomeValue"
-                        type="number"
+                    <ClickableField>
+                        <TextField
+                            id="allIncomeValue"
+                            type="number"
 
-                        variant="outlined"
-                        label="Wartość przychodu"
-                        value={allIncomeValue.toFixed(2)}
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{
-                            inputProps: {
-                                min: 0,
-                                step: 0.01,
-                                readOnly: true,
-                            },
-                            endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
-                        }}
-                    />
+                            variant="outlined"
+                            label="Wartość przychodu"
+                            value={allIncomeValue.toFixed(2)}
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                    step: 0.01,
+                                    readOnly: true,
+                                },
+                                endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
+                            }}
+                        />
+                    </ClickableField>
+
                 </InputField>
             }
         </Container>

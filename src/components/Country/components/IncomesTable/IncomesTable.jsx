@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
 import { numToStr, toPolishDateFormat } from 'utils';
 import { CountryContext } from 'context/CountryContext';
+import { ClickableField } from 'components/Country/components';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -107,13 +108,23 @@ const IncomesTable = () => {
                                 }
                                 {
                                     manualFields.includes("income") &&
-                                    <TableCell>{numToStr(incomeAbroad)}</TableCell>
+                                    <TableCell>
+                                        {numToStr(incomeAbroad)}
+                                    </TableCell>
                                 }
                                 {
                                     autoFields.includes("taxValue") &&
-                                    <TableCell>{numToStr(taxPLN)}</TableCell>
+                                    <TableCell>
+                                        <ClickableField>
+                                            {numToStr(taxPLN)}
+                                        </ClickableField>
+                                    </TableCell>
                                 }
-                                <TableCell>{numToStr(incomePLN)}</TableCell>
+                                <TableCell>
+                                    <ClickableField>
+                                        {numToStr(incomePLN)}
+                                    </ClickableField>
+                                </TableCell>
                                 <TableCell>
                                     <IconButton aria-label="delete" size='small' className={classes.deleteBtn} onClick={() => removeIncome(id)}>
                                         <DeleteIcon />
