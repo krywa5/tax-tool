@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { Container, Button, Typography } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
 import { FieldGroupDivider, TipsPanel } from 'components';
