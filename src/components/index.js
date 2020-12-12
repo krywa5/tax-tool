@@ -12,3 +12,4 @@ export { default as InputField } from './InputField';
 export { default as InputLabel } from './InputLabel';
 export { default as Country } from './Country';
 export { default as FieldGroupDivider } from './FieldGroupDivider';
+export { default as TipsPanel } from './TipsPanel';

@@ -32,6 +32,7 @@ export const defaultStyles = {
     },
     transitions: {
         duration: {
+            medium: 500,
             long: 750,
         }
     }

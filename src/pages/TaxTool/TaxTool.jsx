@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { Paper, makeStyles } from '@material-ui/core';
+import { Paper, makeStyles, Container } from '@material-ui/core';
 
 import ROUTES from 'routes';
 import { auth, db } from 'data/service/firebase.service';
@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
         margin: `${theme.spacing(10)}px auto ${theme.spacing(10)}px`,
         maxWidth: selectedCountry ? '1300px' : '800px',
         padding: `${theme.spacing(3)}px 0`,
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -58,7 +59,7 @@ const TaxTool = () => {
         <>
             {isUserLogged ?
                 (
-                    <>
+                    <Container disableGutters>
                         <LogoutButton />
                         <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Logo />
@@ -73,7 +74,7 @@ const TaxTool = () => {
                                 ))}
                             </Switch>
                         </Paper>
-                    </>
+                    </Container>
                 ) :
                 <Loader isFullscreen color="white" />
             }

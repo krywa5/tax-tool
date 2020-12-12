@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Container, Button, Typography } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
-import { FieldGroupDivider } from 'components';
+import { FieldGroupDivider, TipsPanel } from 'components';
 import { makeStyles } from '@material-ui/styles';
 import { AutoFields, IncomesTable, ManualFields } from './components';
 import { CountryContext } from 'context/CountryContext';
@@ -48,9 +48,9 @@ const Country = () => {
 
     const { setSelectedCountry } = useContext(AppContext);
     const { calculator, setCalculatorValue, addNewIncome, countryData } = useContext(CountryContext);
-    const { currencyTable, currencyValue, currencyValueDate, daysInPoland, endDate, holidayIncome, income, paidTax, paymentDate, startDate, taxValue, allIncomeValue, incomes } = calculator;
+    const { currencyTable, currencyValue, currencyValueDate, daysInPoland, endDate, holidayIncome, income, paidTax, paymentDate, startDate, taxValue, allIncomeValue } = calculator;
 
-    const [isTipsActive, setIsTipsActive] = useState(false);
+
 
 
     // set selected country
@@ -97,8 +97,8 @@ const Country = () => {
     }
 
     return (
-
         <Container component={'div'} className={classes.wrapper} disableGutters maxWidth={false}>
+            <TipsPanel />
             <ManualFields className={classes.container} firstInput={firstInput} />
             <FieldGroupDivider text="Wartości poniżej są obliczane automatycznie" />
             <AutoFields className={classes.container} />
@@ -110,7 +110,6 @@ const Country = () => {
                 <IncomesTable />
             </Container>
         </Container>
-
     );
 }
 
