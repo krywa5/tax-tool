@@ -21,9 +21,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const IncomesTable = ({ incomeList, countryData }) => {
+const IncomesTable = () => {
     const classes = useStyles();
-    const { removeIncome } = useContext(CountryContext);
+    const { removeIncome, countryData, calculator } = useContext(CountryContext);
+    const incomeList = calculator.incomes;
+
 
     return (
         <TableContainer>

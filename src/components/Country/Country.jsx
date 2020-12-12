@@ -107,9 +107,7 @@ const Country = () => {
             </Button>
             <Container className={classes.incomeListWrapper} maxWidth={false}>
                 <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
-                <IncomesTable
-                    incomeList={incomes}
-                    countryData={countryData} />
+                <IncomesTable />
             </Container>
         </Container>
 
