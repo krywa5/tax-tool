@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useRef } from 'react';
 import { Container, Button, Typography } from '@material-ui/core';
 import { AppContext } from 'context/UserContext';
-import { FieldGroupDivider, TipsPanel } from 'components';
+import { FieldGroupDivider, TipsPanel, PrintButton } from 'components';
 import { makeStyles } from '@material-ui/styles';
 import { AutoFields, IncomesTable, ManualFields } from './components';
 import { CountryContext } from 'context/CountryContext';
@@ -107,10 +107,13 @@ const Country = () => {
             </Button>
             {
                 isIncomesListShown &&
-                <Container className={classes.incomeListWrapper} maxWidth={false}>
-                    <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
-                    <IncomesTable />
-                </Container>
+                <>
+                    <Container className={classes.incomeListWrapper} maxWidth={false}>
+                        <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
+                        <IncomesTable />
+                    </Container>
+                    <PrintButton />
+                </>
             }
         </Container>
     );
