@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 const TaxTool = () => {
     const history = useHistory();
-    const { setIsUserLogged, setCountriesData, selectedCountry, countriesData } = useContext(AppContext);
+    const { setIsUserLogged, isUserLogged, setCountriesData, selectedCountry, countriesData } = useContext(AppContext);
     const classes = useStyles({ selectedCountry });
 
     //TODO: handle firebase database error
@@ -46,19 +46,18 @@ const TaxTool = () => {
         });
     }, [setCountriesData])
 
-    // TEMP
-    const isUserLogged = true; // dodać potem z kontekstu
-    // useEffect(() => {
-    //     if (auth.currentUser) {
-    //         // user is logged
-    //         setIsUserLogged(true);
-    //         getCountriesData();
-    //     } else {
-    //         // user is not logged
-    //         history.push(ROUTES.loginPage);
-    //         setIsUserLogged(false);
-    //     }
-    // }, [history, setIsUserLogged, getCountriesData]);
+
+    useEffect(() => {
+        if (auth.currentUser) {
+            // user is logged
+            setIsUserLogged(true);
+            getCountriesData();
+        } else {
+            // user is not logged
+            history.push(ROUTES.loginPage);
+            setIsUserLogged(false);
+        }
+    }, [history, setIsUserLogged, getCountriesData]);
 
     useEffect(() => {
         getCountriesData();

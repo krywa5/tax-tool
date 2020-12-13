@@ -52,14 +52,12 @@ const OverallCounters = ({ values, country }) => {
         return output;
     })();
 
-
-
     return (
         <TableRow>
             {emptyCols}
             <TableCell className={classes.overallCell}>Łącznie</TableCell>
             {
-                taxAbroad ?
+                Number(taxAbroad) ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(taxAbroad)}</ClickableField>
                     </TableCell>
@@ -67,7 +65,7 @@ const OverallCounters = ({ values, country }) => {
                     null
             }
             {
-                incomeAbroad ?
+                Number(incomeAbroad) ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(incomeAbroad)}</ClickableField>
                     </TableCell>
@@ -75,7 +73,7 @@ const OverallCounters = ({ values, country }) => {
                     null
             }
             {
-                taxPLN ?
+                Number(taxPLN) ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(taxPLN)}</ClickableField>
                     </TableCell>
@@ -83,7 +81,7 @@ const OverallCounters = ({ values, country }) => {
                     null
             }
             {
-                incomePLN ?
+                Number(incomePLN) ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(incomePLN)}</ClickableField>
                     </TableCell>
