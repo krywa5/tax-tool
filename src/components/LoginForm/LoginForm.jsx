@@ -70,6 +70,7 @@ const LoginForm = () => {
         toast.success(message,
           {
             position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
           });
 
         setIsLoading(false);
@@ -82,6 +83,7 @@ const LoginForm = () => {
         toast.error(message,
           {
             position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
           });
 
         setIsLoading(false);
