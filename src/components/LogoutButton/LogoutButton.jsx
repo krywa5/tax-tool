@@ -47,7 +47,7 @@ const LogoutButton = props => {
 
     return (
         <Button
-            className={styles.button}
+            className={`${styles.button} no-print`}
             variant="contained"
             color="secondary"
             endIcon={<ExitToAppIcon />}

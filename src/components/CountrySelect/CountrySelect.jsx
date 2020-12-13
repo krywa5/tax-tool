@@ -20,9 +20,9 @@ const CountrySelect = () => {
             justify="space-around"
             alignItems="center"
             wrap="nowrap"
-            className={classes.countryNav}
+            className={`${classes.countryNav} no-print`}
         >
-            <Typography variant="h5">Wybierz kraj:</Typography>
+            <Typography className="no-print" variant="h6">Wybierz kraj:</Typography>
             <CountryFlags />
         </Grid>
     );

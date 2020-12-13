@@ -78,7 +78,7 @@ const TipsPanel = () => {
         <>
             {areTipsAvailable ?
                 <Portal container={document.getElementById('tax-tool')}>
-                    <Container disableGutters className={classes.panelWrapper} component='aside'>
+                    <Container disableGutters className={`${classes.panelWrapper} no-print`} component='aside'>
                         <Container disableGutters className={classes.showTips} onClick={() => setIsTipsActive(true)}>
                             <InfoOutlinedIcon />
                         </Container>

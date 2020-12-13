@@ -35,11 +35,23 @@ const useStyles = makeStyles(theme => ({
     },
     incomeListWrapper: {
         padding: '50px 20px',
+        "@media print": {
+            padding: '0',
+        }
     },
     incomeListTitle: {
         fontWeight: 700,
         marginBottom: '20px',
+        "@media print": {
+            marginBottom: '30px',
+        }
     },
+    countryName: {
+        fontSize: theme.typography.h5.fontSize,
+        fontFamily: theme.typography.h5.fontFamily,
+        fontWeight: 700,
+        lineHeight: theme.typography.h5.lineHeight,
+    }
 }))
 
 const Country = () => {
@@ -99,17 +111,17 @@ const Country = () => {
     return (
         <Container component={'div'} className={classes.wrapper} disableGutters maxWidth={false}>
             <TipsPanel />
-            <ManualFields className={classes.container} firstInput={firstInput} />
+            <ManualFields className={`${classes.container} no-print`} firstInput={firstInput} />
             <FieldGroupDivider text="Wartości poniżej są obliczane automatycznie" />
-            <AutoFields className={classes.container} />
-            <Button onClick={addToIncomeList} disabled={!allIncomeValue} fullWidth={true} color="secondary" variant="contained" size="large" className={classes.submitButton}>
+            <AutoFields className={`${classes.container} no-print`} />
+            <Button onClick={addToIncomeList} disabled={!allIncomeValue} fullWidth={true} color="secondary" variant="contained" size="large" className={`${classes.submitButton} no-print`}>
                 Dodaj do listy
             </Button>
             {
                 isIncomesListShown &&
                 <>
                     <Container className={classes.incomeListWrapper} maxWidth={false}>
-                        <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
+                        <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów<Typography className={`${classes.countryName} only-print`} fontSize="large" variant="body1">&nbsp;- {countryData.label}</Typography></Typography>
                         <IncomesTable />
                     </Container>
                     <PrintButton />

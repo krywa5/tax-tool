@@ -57,6 +57,17 @@ export const globalStyles = { // global CSS styles
                 transform: "translateY(0)",
             }
         },
+        ".no-print": {
+            "@media print": {
+                display: 'none !important',
+            }
+        },
+        ".only-print": {
+            display: 'none !important',
+            "@media print": {
+                display: 'inline-block !important',
+            }
+        }
     }
 }
 

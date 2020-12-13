@@ -29,7 +29,7 @@ const PrintButton = () => {
     return (
         <Portal container={document.getElementById('tax-tool')} >
             <Button
-                className={classes.printBtn}
+                className={`${classes.printBtn} no-print`}
                 variant="contained"
                 color="secondary"
                 onClick={() => {

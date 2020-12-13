@@ -2,7 +2,7 @@ import { TableRow, TableCell } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 import { numToStr } from 'utils';
-import { ClickableField } from '..';
+import { ClickableField } from 'components/Country/components';
 
 const useStyles = makeStyles(theme => ({
     emptyCell: {
@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     overallCell: {
         fontSize: '1.25rem',
         color: theme.palette.common.black,
+        fontWeight: '600',
 
         "&:hover": {
             color: theme.palette.primary.main,
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const OverallCounters = ({ values, currency, country }) => {
+const OverallCounters = ({ values, country }) => {
     const classes = useStyles();
     const { taxAbroad, incomeAbroad, taxPLN, incomePLN } = values;
 
@@ -27,19 +28,19 @@ const OverallCounters = ({ values, currency, country }) => {
     //TODO: zrobić tę część w bardziej programistyczny sposób
     switch (country) {
         case 'netherlands':
-            numberOfEmptyCols = 6;
+            numberOfEmptyCols = 5;
             break;
         case 'belgium':
-            numberOfEmptyCols = 7;
+            numberOfEmptyCols = 6;
             break;
         case 'france':
-            numberOfEmptyCols = 7;
+            numberOfEmptyCols = 6;
             break;
         case 'germany':
-            numberOfEmptyCols = 7;
+            numberOfEmptyCols = 6;
             break;
         default:
-            numberOfEmptyCols = 7;
+            numberOfEmptyCols = 6;
             break;
     }
 
@@ -56,6 +57,7 @@ const OverallCounters = ({ values, currency, country }) => {
     return (
         <TableRow>
             {emptyCols}
+            <TableCell className={classes.overallCell}>Łącznie</TableCell>
             {
                 taxAbroad ?
                     <TableCell className={classes.overallCell}>
@@ -88,7 +90,7 @@ const OverallCounters = ({ values, currency, country }) => {
                     :
                     null
             }
-            <TableCell className={classes.emptyCell}></TableCell>
+            <TableCell className={`${classes.emptyCell} no-print`}></TableCell>
         </TableRow>
     );
 }

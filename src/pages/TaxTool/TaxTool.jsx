@@ -11,7 +11,7 @@ import CountryProvider from 'context/CountryContext';
 const useStyles = makeStyles(theme => ({
     wrapper: ({ selectedCountry }) => ({
         margin: `${theme.spacing(10)}px auto ${theme.spacing(10)}px`,
-        maxWidth: selectedCountry ? '1300px' : '800px',
+        maxWidth: selectedCountry ? 'unset' : '800px',
         padding: `${theme.spacing(3)}px 0`,
         position: 'relative',
         display: 'flex',
@@ -19,7 +19,17 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         animation: `fadeSlideIn ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut} both`,
         transition: `max-width ${theme.transitions.duration.long}ms ${theme.transitions.easing.easeInOut}`,
+
+        "@media print": {
+            boxShadow: 'unset',
+            margin: '0'
+        }
     }),
+    taxToolContainer: {
+        "@media print": {
+            maxWidth: 'unset',
+        }
+    }
 }))
 
 const TaxTool = () => {
@@ -27,13 +37,13 @@ const TaxTool = () => {
     const { setIsUserLogged, setCountriesData, selectedCountry, countriesData } = useContext(AppContext);
     const classes = useStyles({ selectedCountry });
 
-
+    //TODO: handle firebase database error
     const getCountriesData = useCallback(() => {
         const countriesDataRef = db.ref('countries');
-        countriesDataRef.on('value', snapshot => {
+        countriesDataRef.once('value', snapshot => {
             const data = snapshot.val();
             setCountriesData(data);
-        })
+        });
     }, [setCountriesData])
 
     // TEMP
@@ -59,7 +69,7 @@ const TaxTool = () => {
         <>
             {isUserLogged ?
                 (
-                    <Container disableGutters>
+                    <Container disableGutters className={classes.taxToolContainer}>
                         <LogoutButton />
                         <Paper className={classes.wrapper} elevation={15} component="main" >
                             <Logo />

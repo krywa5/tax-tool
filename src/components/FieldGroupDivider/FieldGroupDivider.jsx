@@ -18,7 +18,7 @@ const FieldGroupDivider = ({ text = '', ...rest }) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.dividerWrapper}>
+        <div className={`${classes.dividerWrapper} no-print`}>
             <Typography variant="body1">{text}</Typography>
         </div>
     );

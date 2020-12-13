@@ -12,9 +12,20 @@ const useStyles = makeStyles(theme => ({
             fontWeight: 600,
             fontSize: '1rem',
             textAlign: 'center',
+
+            "@media print": {
+                fontSize: '.75rem',
+                lineHeight: '1.25',
+                padding: '10px 5px',
+            }
         },
         "& td": {
             textAlign: 'center',
+
+            "@media print": {
+                fontSize: '.75rem',
+                padding: '10px 5px',
+            }
         }
     },
     deleteBtn: {
@@ -75,7 +86,7 @@ const IncomesTable = () => {
                             <TableCell>Podatek PLN</TableCell>
                         }
                         <TableCell>Przychód PLN</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell className="no-print"></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -137,7 +148,7 @@ const IncomesTable = () => {
                                         {numToStr(incomePLN)}
                                     </ClickableField>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="no-print">
                                     <IconButton aria-label="delete" size='small' className={classes.deleteBtn} onClick={() => removeIncome(id)}>
                                         <DeleteIcon />
                                     </IconButton>
@@ -149,7 +160,7 @@ const IncomesTable = () => {
                 <TableFooter>
                     {
 
-                        <OverallCounters values={overallValues} currency={countryData.currency} country={countryData.id} />
+                        <OverallCounters values={overallValues} country={countryData.id} />
                     }
                 </TableFooter>
             </Table>

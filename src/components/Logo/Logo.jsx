@@ -18,7 +18,7 @@ const Logo = ({ isSecondary, className }) => {
     const classes = useStyles();
 
     return (
-        <img id="logo" className={`${classes.logo} ${className}`} src={isSecondary ? logoSecondary : logoPrimary} alt="logo" />
+        <img id="logo" className={`${classes.logo} ${className ? className : ''}`} src={isSecondary ? logoSecondary : logoPrimary} alt="logo" />
     );
 }
 
