@@ -17,26 +17,28 @@ const ClickableField = ({ children }) => {
     const classes = useStyles();
 
     const copyToClipboard = (e) => {
-        let text = e.target.innerText;
+        let value = e.target.innerText;
 
         // jeśli target jest inputem to bierzemy jego value
         if (e.target.matches('input')) {
-            text = String(e.target.value).replace('.', ',');
+            value = String(e.target.value).replace('.', ',');
         }
-        text.replace(" ", "");
 
-        navigator.clipboard.writeText(text).then(
-            () => {
-                toast.success(`Wartość ${text} skopiowano do schowka`, {
-                    position: 'top-center',
-                    autoClose: 2000,
-                });
-            },
-            err => {
-                toast.error('Wystąpił błąd podczas kopiowania wartości. Przepisz ją ręcznie.');
-                console.error(err);
-            }
-        );
+        const formattedValue = value.split(/\s/).join('');
+
+        navigator.clipboard.writeText(formattedValue)
+            .then(
+                () => {
+                    toast.success(`Wartość ${value} skopiowano do schowka`, {
+                        position: 'top-center',
+                        autoClose: 2000,
+                    });
+                },
+                err => {
+                    toast.error('Wystąpił błąd podczas kopiowania wartości. Przepisz ją ręcznie.');
+                    console.error(err);
+                }
+            );
     }
 
     return (
