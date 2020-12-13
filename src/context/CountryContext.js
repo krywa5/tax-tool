@@ -15,7 +15,53 @@ const CountryProvider = ({ data, children }) => {
         startDate: '', // data rozpoczęcia pracy
         endDate: '', // data zakończenia pracy
         paymentDate: '', // data wypłaty
-        incomes: [], // tablica do trzymania listy wyników kalkulatora
+        incomes: [
+            // {
+            //     id: 123123123,
+            //     startDate: '2019-01-01',
+            //     endDate: '2019-02-01',
+            //     currencyTable: 'asdasdsad',
+            //     currencyValue: 4.1252,
+            //     currencyValueDate: '2019-02-01',
+            //     daysInPoland: 2,
+            //     holidayIncome: 120,
+            //     incomeAbroad: 1600,
+            //     incomePLN: 4012.12,
+            //     paidTax: 100.12,
+            //     paymentDate: '2019-01-31',
+            //     taxPLN: 400.55,
+            // },
+            // {
+            //     id: 123123112318,
+            //     startDate: '2019-01-01',
+            //     endDate: '2019-02-01',
+            //     currencyTable: 'asdasdsad',
+            //     currencyValue: 4.1252,
+            //     currencyValueDate: '2019-02-01',
+            //     daysInPoland: 2,
+            //     holidayIncome: 120,
+            //     incomeAbroad: 1600,
+            //     incomePLN: 4012.12,
+            //     paidTax: 100.12,
+            //     paymentDate: '2019-01-31',
+            //     taxPLN: 400.55,
+            // },
+            // {
+            //     id: 12312311232118,
+            //     startDate: '2019-01-01',
+            //     endDate: '2019-02-01',
+            //     currencyTable: 'asdasdsad',
+            //     currencyValue: 4.1252,
+            //     currencyValueDate: '2019-02-01',
+            //     daysInPoland: 2,
+            //     holidayIncome: 120,
+            //     incomeAbroad: 1600,
+            //     incomePLN: 30012.12,
+            //     paidTax: 100.12,
+            //     paymentDate: '2019-01-31',
+            //     taxPLN: 400.55,
+            // },
+        ], // tablica do trzymania listy wyników kalkulatora
         currencyValue: 0, // średni kurs waluty z NBP
         currencyValueDate: '', // data średniego kursu waluty z NBP
         currencyTable: '', // tabela waluty

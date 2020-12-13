@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { makeStyles, styled } from '@material-ui/styles';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-import { globalStyles } from 'theme';
+import theme, { globalStyles } from 'theme';
 import { LoginPage, TaxTool } from 'pages';
 import { AppWrapper } from 'components';
 import ROUTES from 'routes';
@@ -16,6 +16,7 @@ const MyToastContainer = styled(ToastContainer)({
     padding: '25px',
     fontSize: '14px',
     borderRadius: '4px',
+    boxShadow: theme.shadows[7],
   },
   "& .Toastify__close-button": {
     position: 'absolute',

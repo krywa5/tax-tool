@@ -48,9 +48,9 @@ const Country = () => {
 
     const { setSelectedCountry } = useContext(AppContext);
     const { calculator, setCalculatorValue, addNewIncome, countryData } = useContext(CountryContext);
-    const { currencyTable, currencyValue, currencyValueDate, daysInPoland, endDate, holidayIncome, income, paidTax, paymentDate, startDate, taxValue, allIncomeValue } = calculator;
+    const { currencyTable, currencyValue, currencyValueDate, daysInPoland, endDate, holidayIncome, income, incomes, paidTax, paymentDate, startDate, taxValue, allIncomeValue } = calculator;
 
-
+    const isIncomesListShown = !!incomes.length;
 
 
     // set selected country
@@ -105,10 +105,13 @@ const Country = () => {
             <Button onClick={addToIncomeList} disabled={!allIncomeValue} fullWidth={true} color="secondary" variant="contained" size="large" className={classes.submitButton}>
                 Dodaj do listy
             </Button>
-            <Container className={classes.incomeListWrapper} maxWidth={false}>
-                <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
-                <IncomesTable />
-            </Container>
+            {
+                isIncomesListShown &&
+                <Container className={classes.incomeListWrapper} maxWidth={false}>
+                    <Typography variant="h5" align="center" className={classes.incomeListTitle}>Lista przychodów</Typography>
+                    <IncomesTable />
+                </Container>
+            }
         </Container>
     );
 }

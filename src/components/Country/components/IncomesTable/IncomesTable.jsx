@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
 import { numToStr, toPolishDateFormat } from 'utils';
 import { CountryContext } from 'context/CountryContext';
-import { ClickableField } from 'components/Country/components';
+import { ClickableField, OverallCounters } from 'components/Country/components';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -27,6 +27,12 @@ const IncomesTable = () => {
     const { removeIncome, countryData, calculator } = useContext(CountryContext);
     const incomeList = calculator.incomes;
 
+    const overallValues = {
+        taxAbroad: 0,
+        incomeAbroad: 0,
+        taxPLN: 0,
+        incomePLN: 0,
+    }
 
     return (
         <TableContainer>
@@ -76,6 +82,12 @@ const IncomesTable = () => {
                     {incomeList.map((incomeData, index) => {
                         const { id, startDate, endDate, incomeAbroad, paidTax, holidayIncome, paymentDate, currencyValue, currencyTable, daysInPoland, taxPLN, incomePLN } = incomeData;
                         const { manual: manualFields, auto: autoFields } = countryData.inputs;
+
+                        // count overall values
+                        overallValues.taxAbroad += paidTax;
+                        overallValues.incomeAbroad += incomeAbroad;
+                        overallValues.taxPLN += taxPLN;
+                        overallValues.incomePLN += incomePLN;
 
                         return (
                             <TableRow key={id}>
@@ -135,7 +147,10 @@ const IncomesTable = () => {
                     })}
                 </TableBody>
                 <TableFooter>
+                    {
 
+                        <OverallCounters values={overallValues} currency={countryData.currency} country={countryData.id} />
+                    }
                 </TableFooter>
             </Table>
         </TableContainer>
