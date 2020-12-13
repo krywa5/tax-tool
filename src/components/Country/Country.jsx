@@ -100,10 +100,10 @@ const Country = () => {
     }
 
     const clearInputs = () => {
-        setCalculatorValue('income', 0);
-        setCalculatorValue('paidTax', 0);
-        setCalculatorValue('holidayIncome', 0);
-        setCalculatorValue('workDays', 0);
+        setCalculatorValue('income', '');
+        setCalculatorValue('paidTax', '');
+        setCalculatorValue('holidayIncome', '');
+        setCalculatorValue('daysInPoland', '');
 
         firstInput.current.focus();
     }

@@ -9,9 +9,9 @@ export const CountryContext = createContext({});
 const CountryProvider = ({ data, children }) => {
     const [countryData, setCountryData] = useState(data);
     const [calculator, setCalculator] = useState({
-        income: 0, // przychód brutto
-        paidTax: 0, // zapłacony podatek zagranicą
-        holidayIncome: 0, // przychód wakacyjny (tylko w Niemczech)
+        income: '', // przychód brutto
+        paidTax: '', // zapłacony podatek zagranicą
+        holidayIncome: '', // przychód wakacyjny (tylko w Niemczech)
         startDate: '', // data rozpoczęcia pracy
         endDate: '', // data zakończenia pracy
         paymentDate: '', // data wypłaty
@@ -68,7 +68,7 @@ const CountryProvider = ({ data, children }) => {
         dailyDiet: Number((countryData.diet * countryData.dietFactor).toFixed(2)), // dzienna dieta wyznaczona na podstawie tabeli diet zagranicznych
         workDays: 0, // ilość dni zagranicą
         workMonths: 0, // ilość miesięcy zagranicą
-        daysInPoland: 0, // ilość spędzonych w Polsce podczas pracy zagranicą
+        daysInPoland: '', // ilość spędzonych w Polsce podczas pracy zagranicą
         taxValue: 0, // podatek PLN
         allIncomeValue: 0, // przychód PLN
     });
