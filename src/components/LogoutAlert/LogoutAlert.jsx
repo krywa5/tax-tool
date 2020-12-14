@@ -18,15 +18,16 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const LogoutAlert = (props) => {
+const LogoutAlert = () => {
     const history = useHistory();
     const classes = useStyles();
-    const { setIsUserLogged } = useContext(AppContext);
+    const { setIsUserLogged, setSelectedCountry } = useContext(AppContext);
 
     const clickHandler = () => {
         auth.signOut();
         history.push(ROUTES.loginPage);
         setIsUserLogged(false);
+        setSelectedCountry("");
     }
 
     return (
