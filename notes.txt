@@ -2,10 +2,11 @@ TODO:
 - Podczas ustalania ostatniego dnia roboczego uwzględnić polskie święta
 - Loader gdy pobierana jest wartość waluty
 - Walidacja inputów
+- Przenieść zmienne z DB typu 'paidTax' do zmiennych
 - Obsługa errora przy pobieraniu danych o krajach z firebase
 - Przypomnienie hasła
 - Ilość pustych komórek w OverallCounter w bardziej programistyczny sposób
-
+- Po wylogowaniu toast traci kontent, bo jego komponent jest już odmontowany
 
 HOLANDIA:
 - Przychód brutto

@@ -26,9 +26,15 @@ export const strToNum = (string = '') => {
 }
 
 export const numToStr = (number = 0, decimalPlace = 2) => {
-    if (number === "") return "0,00"; // hotfix for displaying holiday income in table
+    if (number === "" || number === "0") return "0,00"; // hotfix for displaying holiday income in table
+    let finalNumber = number;
 
-    return number.toLocaleString(undefined, {
+    if (typeof number === 'string') {
+        finalNumber = strToNum(number);
+    }
+
+
+    return finalNumber.toLocaleString(undefined, {
         minimumFractionDigits: decimalPlace,
         maximumFractionDigits: decimalPlace,
     })
@@ -73,5 +79,5 @@ export const dateDiff = (startDate, endDate, daysToSubstract = 0) => {
 }
 
 export const daysToMonths = days => {
-    return Math.round(days / 30);
+    return Math.max(Math.round(days / 30), 1); // 1 month is the minimum value
 }

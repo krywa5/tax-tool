@@ -19,9 +19,10 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const OverallCounters = ({ values, country }) => {
+const OverallCounters = ({ values, country, countersKeys }) => {
     const classes = useStyles();
     const { taxAbroad, incomeAbroad, taxPLN, incomePLN } = values;
+    const { isTaxAbroad, isIncomeAbroad, isTaxPLN, isIncomePLN } = countersKeys;
 
     let numberOfEmptyCols = 0;
 
@@ -44,7 +45,7 @@ const OverallCounters = ({ values, country }) => {
             break;
     }
 
-    const emptyCols = (function () {
+    const emptyCols = (() => {
         const output = [];
         for (let index = 0; index < numberOfEmptyCols; index++) {
             output.push(<TableCell key={index} className={classes.emptyCell}></TableCell>);
@@ -57,7 +58,7 @@ const OverallCounters = ({ values, country }) => {
             {emptyCols}
             <TableCell className={classes.overallCell}>Łącznie</TableCell>
             {
-                Number(taxAbroad) ?
+                isTaxAbroad ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(taxAbroad)}</ClickableField>
                     </TableCell>
@@ -65,7 +66,7 @@ const OverallCounters = ({ values, country }) => {
                     null
             }
             {
-                Number(incomeAbroad) ?
+                isIncomeAbroad ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(incomeAbroad)}</ClickableField>
                     </TableCell>
@@ -73,7 +74,7 @@ const OverallCounters = ({ values, country }) => {
                     null
             }
             {
-                Number(taxPLN) ?
+                isTaxPLN ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(taxPLN)}</ClickableField>
                     </TableCell>
@@ -81,7 +82,7 @@ const OverallCounters = ({ values, country }) => {
                     null
             }
             {
-                Number(incomePLN) ?
+                isIncomePLN ?
                     <TableCell className={classes.overallCell}>
                         <ClickableField>{numToStr(incomePLN)}</ClickableField>
                     </TableCell>

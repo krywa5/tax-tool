@@ -38,11 +38,20 @@ const IncomesTable = () => {
     const { removeIncome, countryData, calculator } = useContext(CountryContext);
     const incomeList = calculator.incomes;
 
+    const { manual: manualFields, auto: autoFields } = countryData.inputs;
+
     const overallValues = {
         taxAbroad: 0,
         incomeAbroad: 0,
         taxPLN: 0,
         incomePLN: 0,
+    }
+
+    const countersKeys = {
+        isTaxAbroad: manualFields.includes('paidTax'),
+        isIncomeAbroad: manualFields.includes('income'),
+        isTaxPLN: autoFields.includes('taxValue'),
+        isIncomePLN: autoFields.includes('allIncomeValue'),
     }
 
     return (
@@ -52,47 +61,49 @@ const IncomesTable = () => {
                     <TableRow>
                         <TableCell>Lp.</TableCell>
                         {
-                            countryData.inputs.manual.includes("startDate") &&
+                            manualFields.includes("startDate") &&
                             <TableCell>Data rozpoczęcia</TableCell>
                         }
                         {
-                            countryData.inputs.manual.includes("endDate") &&
+                            manualFields.includes("endDate") &&
                             <TableCell>Data zakończenia</TableCell>
                         }
                         {
-                            countryData.inputs.manual.includes("paymentDate") &&
+                            manualFields.includes("paymentDate") &&
                             <TableCell>Data wypłaty</TableCell>
                         }
                         {
-                            countryData.inputs.manual.includes("daysInPoland") &&
+                            manualFields.includes("daysInPoland") &&
                             <TableCell>Dni w Polsce</TableCell>
                         }
                         <TableCell>Tabela</TableCell>
                         <TableCell>Kurs waluty</TableCell>
                         {
-                            countryData.inputs.manual.includes("paidTax") &&
+                            manualFields.includes("paidTax") &&
                             <TableCell>Podatek {countryData.currency}</TableCell>
                         }
                         {
-                            countryData.inputs.manual.includes("holidayIncome") &&
+                            manualFields.includes("holidayIncome") &&
                             <TableCell>Przychód wakacyjny</TableCell>
                         }
                         {
-                            countryData.inputs.manual.includes("income") &&
+                            manualFields.includes("income") &&
                             <TableCell>Przychód {countryData.currency}</TableCell>
                         }
                         {
-                            countryData.inputs.manual.includes("paidTax") &&
+                            autoFields.includes("taxValue") &&
                             <TableCell>Podatek PLN</TableCell>
                         }
-                        <TableCell>Przychód PLN</TableCell>
+                        {
+                            autoFields.includes('allIncomeValue') &&
+                            <TableCell>Przychód PLN</TableCell>
+                        }
                         <TableCell className="no-print"></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {incomeList.map((incomeData, index) => {
                         const { id, startDate, endDate, incomeAbroad, paidTax, holidayIncome, paymentDate, currencyValue, currencyTable, daysInPoland, taxPLN, incomePLN } = incomeData;
-                        const { manual: manualFields, auto: autoFields } = countryData.inputs;
 
                         // count overall values
                         overallValues.taxAbroad += paidTax;
@@ -122,12 +133,12 @@ const IncomesTable = () => {
                                 <TableCell>{currencyTable}</TableCell>
                                 <TableCell>{numToStr(currencyValue, 4)}</TableCell>
                                 {
-                                    manualFields.includes("holidayIncome") &&
-                                    <TableCell>{numToStr(holidayIncome)}</TableCell>
-                                }
-                                {
                                     manualFields.includes("paidTax") &&
                                     <TableCell>{numToStr(paidTax)}</TableCell>
+                                }
+                                {
+                                    manualFields.includes("holidayIncome") &&
+                                    <TableCell>{numToStr(holidayIncome)}</TableCell>
                                 }
                                 {
                                     manualFields.includes("income") &&
@@ -143,11 +154,14 @@ const IncomesTable = () => {
                                         </ClickableField>
                                     </TableCell>
                                 }
-                                <TableCell>
-                                    <ClickableField>
-                                        {numToStr(incomePLN)}
-                                    </ClickableField>
-                                </TableCell>
+                                {
+                                    autoFields.includes('allIncomeValue') &&
+                                    <TableCell>
+                                        <ClickableField>
+                                            {numToStr(incomePLN)}
+                                        </ClickableField>
+                                    </TableCell>
+                                }
                                 <TableCell className="no-print">
                                     <IconButton aria-label="delete" size='small' className={classes.deleteBtn} onClick={() => removeIncome(id)}>
                                         <DeleteIcon />
@@ -159,8 +173,7 @@ const IncomesTable = () => {
                 </TableBody>
                 <TableFooter>
                     {
-
-                        <OverallCounters values={overallValues} country={countryData.id} />
+                        <OverallCounters values={overallValues} country={countryData.id} countersKeys={countersKeys} />
                     }
                 </TableFooter>
             </Table>
