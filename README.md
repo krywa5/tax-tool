@@ -11,6 +11,7 @@ Tax tool is a tool calculating your polish taxes for abroad incomes.
 ## Features
 * Income table for multiple calculations
 * Print income table
+* Tips (only Netherlands now)
 ## Technologies used
 * create-react-app
 * React router
@@ -19,3 +20,4 @@ Tax tool is a tool calculating your polish taxes for abroad incomes.
 * Styled components
 * Toastify
 * Prop types
+* NBP API
