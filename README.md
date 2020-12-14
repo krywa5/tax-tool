@@ -2,7 +2,7 @@
 Tax tool is a tool calculating your polish taxes for abroad incomes.
 ## Try it
 * [Click here](https://krywa5.github.io/tax-tool)
-* login/password: test@test.pl/test12
+* login/password: user@user.pl / user12
 ## Available countries
 * Netherlands
 * Belgium
