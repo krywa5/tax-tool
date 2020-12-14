@@ -1,6 +1,7 @@
 TODO:
 - Podczas ustalania ostatniego dnia roboczego uwzględnić polskie święta
 - Loader gdy pobierana jest wartość waluty
+- Walidacja inputów
 - Obsługa errora przy pobieraniu danych o krajach z firebase
 - Przypomnienie hasła
 - Ilość pustych komórek w OverallCounter w bardziej programistyczny sposób

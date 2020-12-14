@@ -164,7 +164,7 @@ const ManualFields = ({ firstInput, className }) => {
                         variant="outlined"
                         label="Dni w Polsce"
                         value={daysInPoland}
-                        onChange={e => setCalculatorValue('daysInPoland', Number(e.target.value))}
+                        onChange={e => setCalculatorValue('daysInPoland', Math.floor(e.target.value))}
                         InputProps={{
                             inputProps: {
                                 min: 0,

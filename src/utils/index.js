@@ -26,13 +26,13 @@ export const strToNum = (string = '') => {
 }
 
 export const numToStr = (number = 0, decimalPlace = 2) => {
+    if (number === "") return "0,00"; // hotfix for displaying holiday income in table
 
     return number.toLocaleString(undefined, {
         minimumFractionDigits: decimalPlace,
         maximumFractionDigits: decimalPlace,
     })
 
-    // return number.toFixed(decimalPlace).replace('.', ',');
 }
 
 export const getLastWorkingDay = (date) => {

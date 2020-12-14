@@ -117,7 +117,7 @@ const IncomesTable = () => {
                                 }
                                 {
                                     manualFields.includes("daysInPoland") &&
-                                    <TableCell>{daysInPoland}</TableCell>
+                                    <TableCell>{Number(daysInPoland)}</TableCell>
                                 }
                                 <TableCell>{currencyTable}</TableCell>
                                 <TableCell>{numToStr(currencyValue, 4)}</TableCell>
