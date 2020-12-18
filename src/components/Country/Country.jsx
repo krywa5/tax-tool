@@ -64,7 +64,6 @@ const Country = () => {
 
     const isIncomesListShown = !!incomes.length;
 
-
     // set selected country
     useEffect(() => {
         const { id } = countryData;
@@ -78,6 +77,8 @@ const Country = () => {
         if (!allIncomeValue) {
             return;
         }
+
+
 
         const newIncome = {
             currencyTable,
@@ -106,6 +107,7 @@ const Country = () => {
         setCalculatorValue('daysInPoland', '');
 
         firstInput.current.focus();
+        window.scroll({ top: 300, left: 0, behavior: 'smooth' });
     }
 
     return (

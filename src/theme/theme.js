@@ -67,7 +67,7 @@ export const globalStyles = { // global CSS styles
             "@media print": {
                 display: 'inline-block !important',
             }
-        }
+        },
     }
 }
 

@@ -15,7 +15,7 @@ const CountryProvider = ({ data, children }) => {
         startDate: '', // data rozpoczęcia pracy
         endDate: '', // data zakończenia pracy
         paymentDate: '', // data wypłaty
-        incomes: [
+        incomes: [ // tablica do trzymania listy wyników kalkulatora
             // {
             //     id: 123123123,
             //     startDate: '2019-01-01',
@@ -61,7 +61,7 @@ const CountryProvider = ({ data, children }) => {
             //     paymentDate: '2019-01-31',
             //     taxPLN: 400.55,
             // },
-        ], // tablica do trzymania listy wyników kalkulatora
+        ],
         currencyValue: 0, // średni kurs waluty z NBP
         currencyValueDate: '', // data średniego kursu waluty z NBP
         currencyTable: '', // tabela waluty
