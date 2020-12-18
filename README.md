@@ -1,5 +1,6 @@
 # Tax Tool
-Tax tool is a tool calculating your polish taxes for abroad incomes.
+pl // Tax tool to narzędzie do obliczania podatku od zagranicznych przychodów.
+en // Tax tool is a tool calculating your polish taxes for abroad incomes.
 ## Try it
 * [Click here](https://krywa5.github.io/tax-tool)
 * login/password: user@user.pl / user12
