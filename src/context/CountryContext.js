@@ -115,9 +115,11 @@ const CountryProvider = ({ data, children }) => {
 
     // Calculate/recalculate calculator values dependent on start and end dates
     useEffect(() => {
-        if (calculator.startDate && (calculator.endDate || calculator.paymentDate)) {
-            setCalculatorValue('workDays', dateDiff(calculator.startDate, calculator.endDate, calculator.daysInPoland));
-            setCalculatorValue('workMonths', daysToMonths(calculator.workDays));
+        const { startDate, endDate, paymentDate, daysInPoland, workDays } = calculator;
+
+        if (startDate && (endDate || paymentDate)) {
+            setCalculatorValue('workDays', dateDiff(startDate, endDate, daysInPoland));
+            setCalculatorValue('workMonths', daysToMonths(workDays));
         }
     },
         [setCalculatorValue, calculator.startDate, calculator.endDate, calculator.paymentDate, calculator.daysInPoland, calculator.workDays]
@@ -125,12 +127,15 @@ const CountryProvider = ({ data, children }) => {
 
     // Get currency API values if end date or payment date has changed 
     useEffect(() => {
-        if (calculator.endDate || calculator.paymentDate) {
-            const properDate = calculator.paymentDate || calculator.endDate; // if paymentDate is inserted it has priority over endDate
+        const { endDate, paymentDate } = calculator;
+        const { currency } = countryData;
+
+        if (endDate || paymentDate) {
+            const properDate = paymentDate || endDate; // if paymentDate is inserted it has priority over endDate
 
             clearAPIValues();
 
-            currencyFetch(getLastWorkingDay(properDate), countryData.currency)
+            currencyFetch(getLastWorkingDay(properDate), currency)
                 .then((data) => {
                     const { effectiveDate: currencyValueDate, mid: currencyValueApi, no: currencyTable } = data.rates[0];
 
@@ -169,7 +174,6 @@ const CountryProvider = ({ data, children }) => {
         const { currencyValue, income, holidayIncome, workDays, dailyDiet, workMonths } = calculator;
         const { monthlyIncomeCost } = countryData;
 
-        // Germany: (income + holidayIncome - workDays*allowanceValue)*currencyValue - workMonths*monthlyIncomeCost
         const allIncome = (income + holidayIncome - workDays * dailyDiet) * currencyValue - workMonths * monthlyIncomeCost;
 
         const output = Math.max(Number(allIncome.toFixed(2)), 0);
