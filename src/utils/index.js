@@ -41,6 +41,25 @@ export const numToStr = (number = 0, decimalPlace = 2) => {
 
 }
 
+const daysOffInPoland = [
+    '01-01',
+    '01-06', // Trzech Króli
+    '05-01',
+    '05-03',
+    '08-15', // Święto Wojska Polskiego
+    '11-01',
+    '11-11',
+    '12-25',
+    '12-26',
+];
+
+const irregularDaysOffInPoland = [
+    '2020-04-12', // Wielkanoc
+    '2020-04-13',
+    '2020-05-31', // Zielone Świątki
+    '2020-06-11', // Boże Ciało
+]
+
 export const getLastWorkingDay = (date) => {
     if (!date) return false;
 
@@ -62,7 +81,18 @@ export const getLastWorkingDay = (date) => {
     // console.log(newDate);
     !(newDate.getDay() % 6) ? (output = true) : (output = false);
     // console.log(`Trzecia iteracja ${output}`);
-    // console.log(`ostateczna data: ${newDate}`);
+
+    // check if the date is day off in Poland
+    // first iteration
+    if (daysOffInPoland.includes(newDate.toISOString().slice(5, 10)) || irregularDaysOffInPoland.includes(newDate.toISOString().slice(0, 10))) {
+        newDate.setDate(newDate.getDate() - 1);
+    }
+    // second iteration
+    if (daysOffInPoland.includes(newDate.toISOString().slice(5, 10)) || irregularDaysOffInPoland.includes(newDate.toISOString().slice(0, 10))) {
+        newDate.setDate(newDate.getDate() - 1);
+    }
+
+    // console.log(`ostateczna data: ${newDate.toISOString().slice(0, 10)}`);
     return newDate.toISOString().slice(0, 10);
 };
 
