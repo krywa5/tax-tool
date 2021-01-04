@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Container, InputAdornment, TextField } from '@material-ui/core';
-import { InputField, InputLabel } from 'components';
+import { InputField, InputLabel, LoadingBackdrop } from 'components';
 import { toPolishDateFormat } from 'utils';
 import { CountryContext } from 'context/CountryContext';
 import { ClickableField } from 'components/Country/components';
@@ -8,10 +8,11 @@ import { ClickableField } from 'components/Country/components';
 const AutoFields = ({ className }) => {
     const { countryData, calculator, setCalculatorValue } = useContext(CountryContext);
 
-    const { currencyValueDate, currencyTable, currencyValue, workMonths, dailyDiet, workDays, taxValue, allIncomeValue } = calculator;
+    const { currencyValueDate, currencyTable, currencyValue, workMonths, dailyDiet, workDays, taxValue, allIncomeValue, isDataFetching } = calculator;
 
     return (
         <Container className={className} maxWidth={false}>
+            {isDataFetching && <LoadingBackdrop />}
             {
                 countryData.inputs.auto.includes("currencyValue") &&
                 <InputField>

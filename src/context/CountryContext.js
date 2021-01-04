@@ -71,6 +71,7 @@ const CountryProvider = ({ data, children }) => {
         daysInPoland: '', // ilość spędzonych w Polsce podczas pracy zagranicą
         taxValue: 0, // podatek PLN
         allIncomeValue: 0, // przychód PLN
+        isDataFetching: false, // flaga gdy pobieranie danych o walucie
     });
 
     const setCalculatorValue = useCallback((key, value) => {
@@ -98,6 +99,14 @@ const CountryProvider = ({ data, children }) => {
     },
         [setCalculatorValue]
     )
+
+    const showDataLoader = () => {
+        setCalculatorValue('isDataFetching', true);
+    }
+
+    const hideDataLoader = () => {
+        setCalculatorValue('isDataFetching', false);
+    }
 
 
     const addNewIncome = (income = {}) => {
@@ -134,6 +143,8 @@ const CountryProvider = ({ data, children }) => {
             const properDate = paymentDate || endDate; // if paymentDate is inserted it has priority over endDate
 
             clearAPIValues();
+            showDataLoader();
+
 
             currencyFetch(getLastWorkingDay(properDate), currency)
                 .then((data) => {
@@ -150,6 +161,7 @@ const CountryProvider = ({ data, children }) => {
                     });
                     console.error(error);
                 })
+                .finally(hideDataLoader);
         }
     },
         [calculator.endDate, calculator.paymentDate, clearAPIValues, countryData.currency, setCalculatorValue]
