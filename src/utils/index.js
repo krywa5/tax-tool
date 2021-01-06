@@ -92,6 +92,8 @@ export const getLastWorkingDay = (date) => {
         newDate.setDate(newDate.getDate() - 1);
     }
 
+    // TODO: DO DOPRACOWANIA - sprawdzenie czy znów nie wypada weekend 14-04-2020
+
     // console.log(`ostateczna data: ${newDate.toISOString().slice(0, 10)}`);
     return newDate.toISOString().slice(0, 10);
 };
