@@ -20,6 +20,10 @@ const useStyles = makeStyles(theme => {
       position: 'fixed',
       top: '48px',
       left: '48px',
+
+      "@media (max-width: 1730px)": {
+        top: '-10px',
+      }
     }
   }
 });

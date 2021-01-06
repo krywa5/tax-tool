@@ -15,6 +15,10 @@ const useStyles = makeStyles(theme => ({
 
         '&:hover': {
             transform: 'translateY(-2px)',
+        },
+        "@media (max-width: 1730px)": {
+            top: '20px',
+            right: '50px',
         }
     },
     toast: {

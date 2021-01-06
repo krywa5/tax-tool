@@ -16,6 +16,10 @@ const useStyles = makeStyles(theme => ({
 
         '&:hover': {
             transform: 'translateY(-2px)',
+        },
+        "@media (max-width: 1730px)": {
+            bottom: '75px',
+            right: '75px',
         }
     },
     printIcon: {
