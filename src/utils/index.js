@@ -33,12 +33,10 @@ export const numToStr = (number = 0, decimalPlace = 2) => {
         finalNumber = strToNum(number);
     }
 
-
     return finalNumber.toLocaleString(undefined, {
         minimumFractionDigits: decimalPlace,
         maximumFractionDigits: decimalPlace,
     })
-
 }
 
 const daysOffInPoland = [
@@ -60,39 +58,45 @@ const irregularDaysOffInPoland = [
     '2020-06-11', // Boże Ciało
 ]
 
-export const getLastWorkingDay = (date) => {
+const isDateWeekendOrDayOff = date => { // date is supposed to be Date object
     if (!date) return false;
 
-    let output = false;
+    let dateObj = typeof date === 'object' ? date : new Date(date);
+
+    let isWeekend = false;
+    const dayIndex = dateObj.getDay();
+    const saturdayIndex = 6;
+    const sundayIndex = 0;
+
+    if (
+        dayIndex === saturdayIndex ||
+        dayIndex === sundayIndex ||
+        daysOffInPoland.includes(dateObj.toISOString().slice(5, 10)) || // check if regular day off
+        irregularDaysOffInPoland.includes(dateObj.toISOString().slice(0, 10)) // check if irregular day off
+    ) {
+        isWeekend = true; // change flag if the day is weekend
+    }
+
+    return isWeekend;
+}
+
+export const getLastWorkingDay = date => {
+    if (!date) return false;
+    let isDayOff = false;
     let newDate = new Date(date);
-    newDate.setDate(newDate.getDate() - 1);
-    // console.log(newDate);
-    !(newDate.getDay() % 6) ? (output = true) : (output = false);
-    // console.log(`Pierwsza iteracja ${output}`);
-    if (output === true) {
-        newDate.setDate(newDate.getDate() - 1);
-    }
-    // console.log(newDate);
-    !(newDate.getDay() % 6) ? (output = true) : (output = false);
-    // console.log(`Druga iteracja ${output}`);
-    if (output === true) {
-        newDate.setDate(newDate.getDate() - 1);
-    }
-    // console.log(newDate);
-    !(newDate.getDay() % 6) ? (output = true) : (output = false);
-    // console.log(`Trzecia iteracja ${output}`);
 
-    // check if the date is day off in Poland
-    // first iteration
-    if (daysOffInPoland.includes(newDate.toISOString().slice(5, 10)) || irregularDaysOffInPoland.includes(newDate.toISOString().slice(0, 10))) {
-        newDate.setDate(newDate.getDate() - 1);
-    }
-    // second iteration
-    if (daysOffInPoland.includes(newDate.toISOString().slice(5, 10)) || irregularDaysOffInPoland.includes(newDate.toISOString().slice(0, 10))) {
-        newDate.setDate(newDate.getDate() - 1);
-    }
+    newDate.setDate(newDate.getDate() - 1); // always subtract one day from original date
 
-    // TODO: DO DOPRACOWANIA - sprawdzenie czy znów nie wypada weekend 14-04-2020
+    for (let i = 0; i < 7; i++) {
+        // console.log(`Iteration nr ${i + 1}`);
+        isDateWeekendOrDayOff(newDate) ? (isDayOff = true) : (isDayOff = false);
+
+        if (isDayOff === true) {
+            newDate.setDate(newDate.getDate() - 1);
+        } else {
+            break; // end the loop if the working the was found
+        }
+    }
 
     // console.log(`ostateczna data: ${newDate.toISOString().slice(0, 10)}`);
     return newDate.toISOString().slice(0, 10);
