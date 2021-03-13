@@ -232,8 +232,12 @@ const CountryProvider = ({ data, children }) => {
     calculator.workMonths,
     countryData.monthlyIncomeCost,
     setCalculatorValue,
-    countryData.monthlyIncomeCost,
   ]);
+
+  // change country data if selected year changed
+  useEffect(() => {
+    setCountryData(data);
+  }, [data]);
 
   return (
     <CountryContext.Provider

@@ -124,14 +124,14 @@ export const daysToMonths = (days) => {
 };
 
 export const setAuthSession = () => {
-  sessionStorage.setItem("bb_isAuth", "true");
+  sessionStorage.setItem("tt_isAuth", "true");
 };
 
 export const closeAuthSession = () => {
-  sessionStorage.removeItem("bb_isAuth");
+  sessionStorage.removeItem("tt_isAuth");
 };
 
 export const isAuthSession = () => {
-  const isAuth = sessionStorage.getItem("bb_isAuth") === "true" ? true : false;
+  const isAuth = sessionStorage.getItem("tt_isAuth") === "true" ? true : false;
   return isAuth;
 };

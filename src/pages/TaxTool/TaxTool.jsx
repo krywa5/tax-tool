@@ -41,6 +41,7 @@ const TaxTool = () => {
     setCountriesData,
     selectedCountry,
     countriesData,
+    selectedYear,
   } = useContext(AppContext);
   const classes = useStyles({ selectedCountry });
 
@@ -48,10 +49,10 @@ const TaxTool = () => {
   const getCountriesData = useCallback(() => {
     const countriesDataRef = db.ref("countries");
     countriesDataRef.once("value", (snapshot) => {
-      const data = snapshot.val();
+      const data = snapshot.val()[selectedYear];
       setCountriesData(data);
     });
-  }, [setCountriesData]);
+  }, [setCountriesData, selectedYear]);
 
   useEffect(() => {
     if (auth.currentUser || isAuthSession()) {
