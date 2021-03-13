@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/tax-tool/static/js/main.f293fc79.chunk.js",
-    "main.js.map": "/tax-tool/static/js/main.f293fc79.chunk.js.map",
+    "main.js": "/tax-tool/static/js/main.797929bd.chunk.js",
+    "main.js.map": "/tax-tool/static/js/main.797929bd.chunk.js.map",
     "runtime-main.js": "/tax-tool/static/js/runtime-main.cdbb0656.js",
     "runtime-main.js.map": "/tax-tool/static/js/runtime-main.cdbb0656.js.map",
     "static/css/2.f904be55.chunk.css": "/tax-tool/static/css/2.f904be55.chunk.css",
-    "static/js/2.47c8e6dc.chunk.js": "/tax-tool/static/js/2.47c8e6dc.chunk.js",
-    "static/js/2.47c8e6dc.chunk.js.map": "/tax-tool/static/js/2.47c8e6dc.chunk.js.map",
+    "static/js/2.0858055c.chunk.js": "/tax-tool/static/js/2.0858055c.chunk.js",
+    "static/js/2.0858055c.chunk.js.map": "/tax-tool/static/js/2.0858055c.chunk.js.map",
     "index.html": "/tax-tool/index.html",
     "static/css/2.f904be55.chunk.css.map": "/tax-tool/static/css/2.f904be55.chunk.css.map",
-    "static/js/2.47c8e6dc.chunk.js.LICENSE.txt": "/tax-tool/static/js/2.47c8e6dc.chunk.js.LICENSE.txt",
+    "static/js/2.0858055c.chunk.js.LICENSE.txt": "/tax-tool/static/js/2.0858055c.chunk.js.LICENSE.txt",
     "static/media/index.css": "/tax-tool/static/media/roboto-vietnamese-400-normal.52cebac0.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.cdbb0656.js",
     "static/css/2.f904be55.chunk.css",
-    "static/js/2.47c8e6dc.chunk.js",
-    "static/js/main.f293fc79.chunk.js"
+    "static/js/2.0858055c.chunk.js",
+    "static/js/main.797929bd.chunk.js"
   ]
 }
