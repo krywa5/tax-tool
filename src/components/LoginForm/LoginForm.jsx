@@ -1,37 +1,36 @@
-import React, { useContext, useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
-import { translateErrorCode } from 'utils';
-import { Copyright, Loader } from 'components';
-import ROUTES from 'routes';
-import { AppContext } from 'context/UserContext';
+import { setAuthSession, translateErrorCode } from "utils";
+import { Copyright, Loader } from "components";
+import ROUTES from "routes";
+import { AppContext } from "context/UserContext";
 
-import { auth } from 'data/service/firebase.service';
+import { auth } from "data/service/firebase.service";
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -58,47 +57,53 @@ const LoginForm = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const submitHandler = e => {
+  const submitHandler = (e) => {
     e.preventDefault();
     const { email, password } = inputData;
     setIsLoading(true);
 
-    auth.signInWithEmailAndPassword(email, password)
-      .then(user => {
-        const message = 'Zalogowano pomyślnie.';
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        const message = "Zalogowano pomyślnie.";
 
-        toast.success(message,
-          {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000,
-          });
+        toast.success(message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+        });
 
         setIsLoading(false);
         history.push(ROUTES.taxTool);
         setIsUserLogged(true);
+        setAuthSession();
       })
       .catch((error) => {
         const message = translateErrorCode(error.code);
 
-        toast.error(message,
-          {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000,
-          });
+        toast.error(message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+        });
 
         setIsLoading(false);
       });
-  }
+  };
 
-  const inputHandler = e => {
-    setInputData(prevVal => ({
+  const inputHandler = (e) => {
+    setInputData((prevVal) => ({
       ...prevVal,
       [e.target.id]: e.target.value,
     }));
-  }
+  };
 
   return (
-    <Container className={classes.container} component="main" maxWidth="sm" disableGutters fixed>
+    <Container
+      className={classes.container}
+      component="main"
+      maxWidth="sm"
+      disableGutters
+      fixed
+    >
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -143,7 +148,7 @@ const LoginForm = () => {
             color="primary"
             className={classes.submit}
           >
-            {isLoading ? <Loader color='white' isSmall /> : 'Zaloguj'}
+            {isLoading ? <Loader color="white" isSmall /> : "Zaloguj"}
           </Button>
         </form>
       </div>
@@ -152,6 +157,6 @@ const LoginForm = () => {
       </Box>
     </Container>
   );
-}
+};
 
 export default LoginForm;
