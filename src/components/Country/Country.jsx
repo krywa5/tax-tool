@@ -1,10 +1,16 @@
 import React, { useEffect, useContext, useRef } from "react";
 import { Container, Button, Typography } from "@material-ui/core";
 import { AppContext } from "context/UserContext";
-import { FieldGroupDivider, TipsPanel, PrintButton } from "components";
+import {
+  FieldGroupDivider,
+  TipsPanel,
+  PrintButton,
+  DismissForm,
+} from "components";
 import { makeStyles } from "@material-ui/styles";
 import { AutoFields, IncomesTable, ManualFields } from "./components";
 import { CountryContext } from "context/CountryContext";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -59,7 +65,12 @@ const Country = () => {
   const classes = useStyles();
   const firstInput = useRef();
 
-  const { setSelectedCountry } = useContext(AppContext);
+  const {
+    setSelectedCountry,
+    selectedYear,
+    setSelectedYear,
+    availableYears,
+  } = useContext(AppContext);
   const {
     calculator,
     setCalculatorValue,
@@ -89,6 +100,43 @@ const Country = () => {
     const { id } = countryData;
     setSelectedCountry(id); // UserContext
   }, [countryData, setSelectedCountry]);
+
+  useEffect(() => {
+    if (!endDate) return;
+
+    const endDateYear = new Date(endDate).getFullYear();
+
+    if (endDateYear !== selectedYear) {
+      toast.error(
+        ({ closeToast }) => {
+          return (
+            <DismissForm
+              text="Rok zakończenia pracy różni się od roku rozliczenia!"
+              acceptBtnText="Zmień"
+              rejectBtnText="Zostaw"
+              rejectHandler={() => {
+                closeToast();
+              }}
+              acceptHandler={() => {
+                if (availableYears.includes(endDateYear)) {
+                  setSelectedYear(endDateYear);
+                } else {
+                  toast.error(
+                    "Brak wybranego roku w bazie danych! Obliczony dochód może być nieprawidłowy!"
+                  );
+                }
+                closeToast();
+              }}
+            />
+          );
+        },
+        {
+          autoClose: false,
+          toastId: "wrong-year-toast-id",
+        }
+      );
+    }
+  }, [selectedYear, endDate, setSelectedYear, availableYears]);
 
   const addToIncomeList = () => {
     if (!allIncomeValue) {

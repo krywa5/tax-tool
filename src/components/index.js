@@ -16,3 +16,4 @@ export { default as TipsPanel } from "./TipsPanel";
 export { default as PrintButton } from "./PrintButton";
 export { default as LoadingBackdrop } from "./LoadingBackdrop";
 export { default as SelectYear } from "./SelectYear";
+export { default as DismissForm } from "./DismissForm";
