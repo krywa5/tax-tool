@@ -5,7 +5,10 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
   countryNav: {
-    margin: "20px 0 20px",
+    padding: "20px",
+  },
+  selectText: {
+    whiteSpace: "nowrap",
   },
 });
 
@@ -22,7 +25,7 @@ const CountrySelect = () => {
       wrap="nowrap"
       className={`${classes.countryNav} no-print`}
     >
-      <Typography className="no-print" variant="h6">
+      <Typography className={`no-print ${classes.selectText}`} variant="h6">
         Wybierz kraj:
       </Typography>
       <CountryFlags />

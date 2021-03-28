@@ -8,12 +8,12 @@ import belgiumFlag from "assets/images/flags/belgium.jpg";
 import franceFlag from "assets/images/flags/france.jpg";
 import germanyFlag from "assets/images/flags/germany.jpg";
 import netherlandsFlag from "assets/images/flags/netherlands.jpg";
+import norwayFlag from "assets/images/flags/norway.png";
+import switzerlandFlag from "assets/images/flags/switzerland.png";
 import noFlag from "assets/images/flags/no-flag.jpg";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
-    maxWidth: "80px",
-    marginRight: "20px",
     cursor: "pointer",
     boxShadow: theme.shadows[5],
     position: "relative",
@@ -49,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
       outline: `3px solid ${theme.palette.secondary.main}`,
     },
   },
+  img: {
+    objectFit: "cover",
+    objectPosition: "center",
+    width: "100%",
+    aspectRatio: "16/9",
+  },
 }));
 
 const CountryFlag = ({ country, countryLabel }) => {
@@ -56,7 +62,7 @@ const CountryFlag = ({ country, countryLabel }) => {
   const history = useHistory();
   const { selectedCountry, setSelectedCountry } = useContext(AppContext);
 
-  const getProperFlag = () => {
+  const flagImg = (() => {
     switch (country) {
       case "belgium":
         return belgiumFlag;
@@ -66,10 +72,14 @@ const CountryFlag = ({ country, countryLabel }) => {
         return germanyFlag;
       case "netherlands":
         return netherlandsFlag;
+      case "norway":
+        return norwayFlag;
+      case "switzerland":
+        return switzerlandFlag;
       default:
         return noFlag;
     }
-  };
+  })();
 
   const clickHandler = () => {
     if (country === selectedCountry) {
@@ -86,10 +96,10 @@ const CountryFlag = ({ country, countryLabel }) => {
       <li
         className={`${classes.listItem} ${
           country === selectedCountry ? "selected" : ""
-        }`}
+        }`.trim()}
         onClick={clickHandler}
       >
-        <img src={getProperFlag()} alt="country flag" />
+        <img src={flagImg} alt="country flag" className={classes.img} />
       </li>
     </Tooltip>
   );
