@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import { getLastWorkingDay, dateDiff, daysToMonths } from "utils";
+import { getLastWorkingDay, dateDiff, daysToMonths, sortByKey } from "utils";
 import { currencyFetch } from "data/fetch/currency.fetch";
 
 export const CountryContext = createContext({});
@@ -104,7 +104,10 @@ const CountryProvider = ({ data, children }) => {
   };
 
   const addNewIncome = (income = {}) => {
-    setCalculatorValue("incomes", [...calculator.incomes, income]);
+    setCalculatorValue(
+      "incomes",
+      sortByKey([...calculator.incomes, income], "startDate")
+    );
     return;
   };
 

@@ -135,3 +135,28 @@ export const isAuthSession = () => {
   const isAuth = sessionStorage.getItem("tt_isAuth") === "true" ? true : false;
   return isAuth;
 };
+
+export const sortByKey = (arrayToSort, sortKey) => {
+  if (
+    !sortKey ||
+    !arrayToSort ||
+    !Array.isArray(arrayToSort) ||
+    typeof sortKey !== "string"
+  ) {
+    console.error("Podano złe argumenty do funkcji sortByKey.");
+    return;
+  }
+
+  return arrayToSort.sort((a, b) => {
+    const propertyA = a[sortKey];
+    const propertyB = b[sortKey];
+
+    if (propertyA > propertyB) {
+      return 1;
+    } else if (propertyA === propertyB) {
+      return 0;
+    } else {
+      return -1;
+    }
+  });
+};
