@@ -3,7 +3,7 @@ export const currencyFetch = async (
   currency = "EUR"
 ) => {
   const currencyFormatted = currency.toLowerCase();
-  const PROXY_URL = "https://secret-ocean-49799.herokuapp.com/";
+  const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
   const API_URL = `${PROXY_URL}http://api.nbp.pl/api/exchangerates/rates/a/${currencyFormatted}/${currencyValueDate}/?format=json`;
 
   const response = await fetch(API_URL, {
