@@ -65,18 +65,10 @@ const Country = () => {
   const classes = useStyles();
   const firstInput = useRef();
 
-  const {
-    setSelectedCountry,
-    selectedYear,
-    setSelectedYear,
-    availableYears,
-  } = useContext(AppContext);
-  const {
-    calculator,
-    setCalculatorValue,
-    addNewIncome,
-    countryData,
-  } = useContext(CountryContext);
+  const { setSelectedCountry, selectedYear, setSelectedYear, availableYears } =
+    useContext(AppContext);
+  const { calculator, setCalculatorValue, addNewIncome, countryData } =
+    useContext(CountryContext);
   const {
     currencyTable,
     currencyValue,
@@ -172,6 +164,10 @@ const Country = () => {
     firstInput.current.focus();
     window.scroll({ top: 300, left: 0, behavior: "smooth" });
   };
+
+  const isFormReadyToRender = !!availableYears.length;
+
+  if (!isFormReadyToRender) return null;
 
   return (
     <Container

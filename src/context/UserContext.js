@@ -10,7 +10,9 @@ const AppProvider = ({ children }) => {
   const [selectedYear, setSelectedYear] = useState(
     new Date().getFullYear() - 1
   );
-  const [availableYears, setAvailableYears] = useState([]);
+  const [availableYears, setAvailableYears] = useState([
+    new Date().getFullYear() - 1,
+  ]);
 
   // Get data from DB and set available years
   useEffect(() => {

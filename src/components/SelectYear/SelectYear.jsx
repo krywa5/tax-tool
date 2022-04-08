@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { AppContext } from "context/UserContext";
 import { MenuItem, Select } from "@material-ui/core";
+import Loader from "components/Loader";
 
 const SelectYear = () => {
-  const { selectedYear, setSelectedYear, availableYears } = useContext(
-    AppContext
-  );
+  const { selectedYear, setSelectedYear, availableYears } =
+    useContext(AppContext);
 
   const changeHandler = (e) => {
     setSelectedYear(e.target.value);
@@ -17,18 +17,12 @@ const SelectYear = () => {
     </MenuItem>
   ));
 
+  if (availableYears.length <= 1) return <Loader />;
+
   return (
-    <>
-      {availableYears.length ? (
-        <Select
-          value={selectedYear}
-          onChange={changeHandler}
-          variant="outlined"
-        >
-          {MenuItemsJSX}
-        </Select>
-      ) : null}
-    </>
+    <Select value={selectedYear} onChange={changeHandler} variant="outlined">
+      {MenuItemsJSX}
+    </Select>
   );
 };
 
