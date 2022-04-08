@@ -1,6 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
 import { getLastWorkingDay, dateDiff, daysToMonths, sortByKey } from "utils";
 import { currencyFetch } from "data/fetch/currency.fetch";
 
@@ -121,13 +120,8 @@ const CountryProvider = ({ data, children }) => {
   // Calculate/recalculate calculator values dependent on start and end dates
   useEffect(
     () => {
-      const {
-        startDate,
-        endDate,
-        paymentDate,
-        daysInPoland,
-        workDays,
-      } = calculator;
+      const { startDate, endDate, paymentDate, daysInPoland, workDays } =
+        calculator;
 
       if (startDate && (endDate || paymentDate)) {
         setCalculatorValue(
